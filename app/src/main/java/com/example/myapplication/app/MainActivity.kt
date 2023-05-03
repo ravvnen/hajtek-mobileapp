@@ -9,12 +9,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.WbSunny
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,70 +24,82 @@ import com.example.myapplication.app.topmenu.Drawer
 import com.example.myapplication.app.topmenu.*
 import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import kotlinx.coroutines.launch
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import com.example.myapplication.backend.Email
+import com.example.myapplication.backend.EmailUtil
+import java.time.LocalDateTime
+import java.util.*
 
-class MainActivity : ComponentActivity() {
-    private val menuItems = listOf(
-        MenuItemModel("1", "Inbox", Icons.Rounded.WbSunny, "Inbox") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("2", "Sent", Icons.Rounded.WbSunny, "Sent") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("3", "Spam", Icons.Rounded.WbSunny, "Spam") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("4", "Trash", Icons.Rounded.WbSunny, "Trash") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-    )
 
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(darkTheme = true) {
-                val scaffoldState = rememberScaffoldState()
-                val scope = rememberCoroutineScope()
-                Scaffold(scaffoldState = scaffoldState, topBar = {
-                    AppBar(title = "Hajtek Mail Client") {
-                        Log.v(this::class.simpleName, "before launch Click")
-                        scope.launch {
-                            Log.v(this::class.simpleName, "in launch launch Click")
-                            scaffoldState.drawerState.open()
-                        }
-                    }
-                }, content = {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(all = 12.dp)
-                            .background(Color.White)
-                    ) {
-                        val image = painterResource(id = R.drawable.hajteklogo)
-                        // Create a box to overlap image and texts
-                        Box {
-                            Image(
-                                modifier = Modifier
-                                    .size(size = 600.dp),
-                                painter = image,
-                                contentDescription = null
-                            )
-                        }
-                        Text(text = "and senior consultant Ravn", color = Color.Black, fontSize = 25.sp)
-                    }
-                },
-                    drawerContent = {
-                    Drawer(
-                        "HAJTEK", menuItems
+            Surface(color = MaterialTheme.colors.background) {
+                SendEmailView()
+            }
+        }
+    }
+
+
+    @Composable
+    fun SendEmailView() {
+        var to by remember { mutableStateOf("") }
+        var subject by remember { mutableStateOf("") }
+        var body by remember { mutableStateOf("") }
+
+        val context = LocalContext.current
+
+        Column(Modifier.padding(16.dp)) {
+            OutlinedTextField(
+                value = to,
+                onValueChange = { to = it },
+                label = { Text("To") }
+            )
+            OutlinedTextField(
+                value = subject,
+                onValueChange = { subject = it },
+                label = { Text("Subject") }
+            )
+            OutlinedTextField(
+                value = body,
+                onValueChange = { body = it },
+                label = { Text("Body") },
+                maxLines = 10
+            )
+            Button(
+                onClick = {
+                    val email = Email(
+                        from = "your-email@example.com",
+                        to = listOf(to),
+                        subject = subject,
+                        body = body,
+                        sentDate = LocalDateTime.now().toString(),
+                        receivedDate = ""
                     )
-                })
+
+                    EmailUtil.sendEmail(
+                        host = "smtp.gmail.com",
+                        port = "587",
+                        username = "your-email@example.com",
+                        password = "your-email-password",
+                        mail = email
+                    )
+
+                    Toast.makeText(context, "Email sent", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text("Send")
             }
         }
     }
 }
+
+
+
