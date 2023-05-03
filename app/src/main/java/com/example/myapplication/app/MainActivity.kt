@@ -32,11 +32,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -75,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             Button(
                 onClick = {
                     val email = Email(
-                        from = "your-email@example.com",
+                        from = "testemailappuser@gmail.com",
                         to = listOf(to),
                         subject = subject,
                         body = body,
@@ -83,15 +86,27 @@ class MainActivity : AppCompatActivity() {
                         receivedDate = ""
                     )
 
-                    EmailUtil.sendEmail(
-                        host = "smtp.gmail.com",
-                        port = "587",
-                        username = "your-email@example.com",
-                        password = "your-email-password",
-                        mail = email
-                    )
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            EmailUtil.sendEmail(
+                                host = "smtp.gmail.com",
+                                port = "587",
+                                username = "testemailappuser@gmail.com",
+                                password = "TesT1234",
+                                mail = email
+                            )
 
-                    Toast.makeText(context, "Email sent", Toast.LENGTH_SHORT).show()
+                            // Switch back to the main thread to show the toast
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Email sent", Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            // Handle any exceptions
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Failed to send email: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 },
                 modifier = Modifier.padding(top = 16.dp)
             ) {
