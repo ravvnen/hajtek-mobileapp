@@ -31,12 +31,20 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val menuItems = listOf(
-        MenuItemModel("1", "Theater of Blood", Icons.Rounded.WbSunny, "Raid") {
-            val intent = Intent(this@MainActivity, RaidActivity::class.java)
+        MenuItemModel("1", "Inbox", Icons.Rounded.WbSunny, "Inbox") {
+            val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("2", "Tomb of Amascut", Icons.Rounded.WbSunny, "Raid") {
-            val intent = Intent(this@MainActivity, RaidActivity::class.java)
+        MenuItemModel("2", "Sent", Icons.Rounded.WbSunny, "Sent") {
+            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+            startActivity(intent)
+        },
+        MenuItemModel("3", "Spam", Icons.Rounded.WbSunny, "Spam") {
+            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+            startActivity(intent)
+        },
+        MenuItemModel("4", "Trash", Icons.Rounded.WbSunny, "Trash") {
+            val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
     )
@@ -49,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 val scaffoldState = rememberScaffoldState()
                 val scope = rememberCoroutineScope()
                 Scaffold(scaffoldState = scaffoldState, topBar = {
-                    AppBar(title = "Runescape Thesaurus") {
+                    AppBar(title = "Hajtek Mail Client") {
                         Log.v(this::class.simpleName, "before launch Click")
                         scope.launch {
                             Log.v(this::class.simpleName, "in launch launch Click")
@@ -63,9 +71,9 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(all = 12.dp)
-                            .background(Color.Black)
+                            .background(Color.White)
                     ) {
-                        val image = painterResource(id = R.drawable.osrsview)
+                        val image = painterResource(id = R.drawable.hajteklogo)
                         // Create a box to overlap image and texts
                         Box {
                             Image(
@@ -75,12 +83,12 @@ class MainActivity : ComponentActivity() {
                                 contentDescription = null
                             )
                         }
-                        Text(text = "By Phillip Ravn Boe Jensen", color = Color.White, fontSize = 25.sp)
+                        Text(text = "and senior consultant Ravn", color = Color.Black, fontSize = 25.sp)
                     }
                 },
                     drawerContent = {
                     Drawer(
-                        "Raids", menuItems
+                        "HAJTEK", menuItems
                     )
                 })
             }

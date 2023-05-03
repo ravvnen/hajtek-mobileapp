@@ -24,7 +24,7 @@ import com.example.myapplication.app.theme.AppTheme
 fun MenuItem(menuItem: MenuItemModel) {
     Row(
         Modifier
-            .background(color = Color.Red)
+            .background(color = Color.White)
             .fillMaxWidth()
             .padding(16.dp)
             .clickable { menuItem.onClick() }) {

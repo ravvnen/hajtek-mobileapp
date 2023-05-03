@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.app.theme.AppTheme
 import com.example.myapplication.backend.Amascut_Bosses
 
-class BossActivity : ComponentActivity() {
+class ViewMailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
