@@ -43,7 +43,7 @@ object EmailUtil {
     val mailFrom : String = "testemailappuser@gmail.com"
     val password : String = "ffabdfjtpgsqtlht"
 
-    suspend fun sendEmail(host: String, port: String, username: String, password: String, mail: Email) = withContext(Dispatchers.IO) {
+    fun sendEmail(host: String, port: String, username: String, password: String, mail: Email) {
         val properties = Properties().apply {
             put("mail.smtp.host", host)
             put("mail.smtp.port", port)
