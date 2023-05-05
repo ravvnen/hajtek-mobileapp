@@ -40,9 +40,8 @@ data class Email(
 
 object EmailUtil {
 
-    val mailTo : String = "mikrohd00@gmail.com"
-    val mailFrom : String = "mikk838g@gmail.com"
-    val password : String = "gnwhxhszjmrxxmva"
+    val mailFrom : String = "testemailappuser@gmail.com"
+    val password : String = "ffabdfjtpgsqtlht"
 
     suspend fun sendEmail(host: String, port: String, username: String, password: String, mail: Email) = withContext(Dispatchers.IO) {
         val properties = Properties().apply {
@@ -115,8 +114,5 @@ object EmailUtil {
         }
         fetchedInbox
     }
-
-    suspend fun draftEmail  
-
 
 }
