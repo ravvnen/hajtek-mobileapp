@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1078293166151",
+    "project_id": "hajtek-mobileapp",
+    "storage_bucket": "hajtek-mobileapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078293166151:android:78ff86956662a7efb4d962",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078293166151-uoa7tornrc8om4ivn1vdgoufiagde663.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL6VoIAdY-AokNX3Xn7j7FnJ2WV_B7fv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078293166151-uoa7tornrc8om4ivn1vdgoufiagde663.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
