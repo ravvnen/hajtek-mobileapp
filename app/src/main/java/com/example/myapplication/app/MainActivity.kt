@@ -31,19 +31,19 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val menuItems = listOf(
-        MenuItemModel("1", "Inbox", Icons.Rounded.WbSunny, "Inbox") {
+        MenuItemModel("1", "Inbox",  "Inbox") {
             val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("2", "Sent", Icons.Rounded.WbSunny, "Sent") {
+        MenuItemModel("2", "Sent",  "Sent") {
             val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("3", "Spam", Icons.Rounded.WbSunny, "Spam") {
+        MenuItemModel("3", "Spam",  "Spam") {
             val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("4", "Trash", Icons.Rounded.WbSunny, "Trash") {
+        MenuItemModel("4", "Trash",  "Trash") {
             val intent = Intent(this@MainActivity, InboxActivity::class.java)
             startActivity(intent)
         },
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                 },
                     drawerContent = {
                     Drawer(
-                        "HAJTEK", menuItems
+                        "Menu", menuItems
                     )
                 })
             }
