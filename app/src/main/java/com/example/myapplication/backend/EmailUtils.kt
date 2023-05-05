@@ -1,10 +1,32 @@
 package com.example.myapplication.backend
 
+import com.google.api.client.auth.oauth2.Credential
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.googleapis.json.GoogleJsonResponseException
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.gson.GsonFactory
+import com.google.api.client.util.store.FileDataStoreFactory
+import com.google.api.services.gmail.Gmail
+import com.google.api.services.gmail.GmailScopes.GMAIL_SEND
 import jakarta.mail.*
-import java.util.*
+import jakarta.mail.Message.RecipientType.TO
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeMessage
-import java.time.LocalDateTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStreamReader
+import java.nio.file.Paths
+import java.util.*
+import kotlin.collections.List
+import kotlin.collections.MutableList
+import kotlin.collections.mutableListOf
+import org.apache.commons.codec.binary.Base64
 
 
 data class Email(
@@ -12,13 +34,17 @@ data class Email(
     val to: List<String>,
     val subject: String,
     val body: String,
-    val sentDate: String ,
-    val receivedDate: String
+    val sentDate: String,
+    val receivedDate: String,
 )
 
 object EmailUtil {
 
-    fun sendEmail(host: String, port: String, username: String, password: String, mail: Email) {
+    val mailTo : String = "mikrohd00@gmail.com"
+    val mailFrom : String = "mikk838g@gmail.com"
+    val password : String = "gnwhxhszjmrxxmva"
+
+    suspend fun sendEmail(host: String, port: String, username: String, password: String, mail: Email) = withContext(Dispatchers.IO) {
         val properties = Properties().apply {
             put("mail.smtp.host", host)
             put("mail.smtp.port", port)
@@ -49,7 +75,7 @@ object EmailUtil {
         }
     }
 
-    fun fetchEmails(host: String, username: String, password: String) : List<Email> {
+    suspend fun fetchEmails(host: String, username: String, password: String) : List<Email> = withContext(Dispatchers.IO){
 
         val fetchedInbox : MutableList<Email> = mutableListOf()
 
@@ -64,10 +90,11 @@ object EmailUtil {
         val inbox = store.getFolder("INBOX")
         inbox.open(Folder.READ_ONLY)
 
-        val messages = inbox.messages
+        val messages = inbox.getMessages(5, 10)
+        //val messages = inbox.messages
         for (message in messages) {
 
-            val recipients = message.getRecipients(Message.RecipientType.TO)
+            val recipients = message.getRecipients(TO)
             val toList = mutableListOf<String>()
             if (recipients != null) {
                 for (recipient in recipients) {
@@ -76,7 +103,7 @@ object EmailUtil {
             }
 
             var tmpEmail = Email(
-                message.from.toString(),
+                message.from[0].toString(),
                 toList,
                 message.subject,
                 message.content.toString(),
@@ -86,7 +113,10 @@ object EmailUtil {
 
             fetchedInbox.add(tmpEmail)
         }
-
-        return fetchedInbox
+        fetchedInbox
     }
+
+    suspend fun draftEmail  
+
+
 }

@@ -23,18 +23,18 @@ import com.example.myapplication.app.topmenu.AppBar
 import com.example.myapplication.app.topmenu.Drawer
 import com.example.myapplication.app.topmenu.*
 import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
-import kotlinx.coroutines.launch
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.util.*
 
@@ -44,7 +44,54 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Surface(color = MaterialTheme.colors.background) {
-                SendEmailView()
+                InboxList()
+            }
+        }
+    }
+
+    @SuppressLint("CoroutineCreationDuringComposition")
+    @Composable
+    fun InboxList() {
+
+        var emails by remember { mutableStateOf(listOf<Email>()) }
+
+        LaunchedEffect(Unit){
+            val mails = EmailUtil.fetchEmails("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
+            emails = mails
+        }
+
+        LazyColumn {
+            items(emails) { email ->
+                Button(
+                    onClick = { /* Navigate to full email */ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 8.dp
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = "From: ${email.from}",
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Subject: ${email.subject}",
+                            fontWeight = FontWeight.Normal
+                        )
+                        Text(
+                            text = "Received: ${email.receivedDate}",
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
+                }
             }
         }
     }
@@ -78,7 +125,7 @@ class MainActivity : ComponentActivity() {
             Button(
                 onClick = {
                     val email = Email(
-                        from = "testemailappuser@gmail.com",
+                        from = EmailUtil.mailFrom,
                         to = listOf(to),
                         subject = subject,
                         body = body,
@@ -91,8 +138,8 @@ class MainActivity : ComponentActivity() {
                             EmailUtil.sendEmail(
                                 host = "smtp.gmail.com",
                                 port = "587",
-                                username = "testemailappuser@gmail.com",
-                                password = "TesT1234",
+                                username = EmailUtil.mailFrom,
+                                password = EmailUtil.password,
                                 mail = email
                             )
 
