@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.WbSunny
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -29,22 +29,22 @@ import com.example.myapplication.app.topmenu.*
 import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+class UIActivity : ComponentActivity() {
     private val menuItems = listOf(
-        MenuItemModel("1", "Inbox", Icons.Rounded.WbSunny, "Inbox") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+        MenuItemModel(Icons.Filled.Email,"1", "Inbox",  "Inbox") {
+            val intent = Intent(this@UIActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("2", "Sent", Icons.Rounded.WbSunny, "Sent") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+        MenuItemModel(Icons.Filled.Send,"2", "Sent",  "Sent") {
+            val intent = Intent(this@UIActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("3", "Spam", Icons.Rounded.WbSunny, "Spam") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+        MenuItemModel(Icons.Default.Warning,"3", "Spam",  "Spam") {
+            val intent = Intent(this@UIActivity, InboxActivity::class.java)
             startActivity(intent)
         },
-        MenuItemModel("4", "Trash", Icons.Rounded.WbSunny, "Trash") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
+        MenuItemModel(Icons.Filled.Delete,"4", "Trash",  "Trash") {
+            val intent = Intent(this@UIActivity, InboxActivity::class.java)
             startActivity(intent)
         },
     )
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                 },
                     drawerContent = {
                     Drawer(
-                        "HAJTEK", menuItems
+                         menuItems
                     )
                 })
             }
