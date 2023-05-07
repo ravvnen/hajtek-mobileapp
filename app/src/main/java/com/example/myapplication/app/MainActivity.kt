@@ -51,27 +51,9 @@ import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import com.example.myapplication.app.UIActivity
 
 class MainActivity : ComponentActivity() {
-    private val menuItems = listOf(
-        MenuItemModel("1", "Inbox", Icons.Rounded.WbSunny, "Inbox") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("2", "Sent", Icons.Rounded.WbSunny, "Sent") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("3", "Spam", Icons.Rounded.WbSunny, "Spam") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel("4", "Trash", Icons.Rounded.WbSunny, "Trash") {
-            val intent = Intent(this@MainActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-    )
-
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +96,9 @@ class MainActivity : ComponentActivity() {
                     // Login success
                     Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
+                    val intent = Intent(this@MainActivity, UIActivity::class.java)
+                    //intent.putExtra("kode", user?.email)
+                    startActivity(intent)
                     // Do something with the logged-in user
                 } else {
                     // Login failed
