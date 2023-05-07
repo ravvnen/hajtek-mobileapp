@@ -1,54 +1,61 @@
 package com.example.myapplication.app.topmenu
 
 import android.content.Intent
-import android.icu.text.ListFormatter.Width
+import android.media.Image
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.SwitchAccount
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.InspectableModifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.example.myapplication.R
-import com.example.myapplication.app.InboxActivity
+import com.example.myapplication.app.theme.AppTheme
 import com.example.myapplication.app.topmenu.menuitem.MenuItem
 import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
-import com.example.myapplication.app.theme.AppTheme
+
+
+/*
+ASBJØRN^2s UI MAIN
+ */
+
 
 @Composable
-fun Drawer(title: String, menuItems: List<MenuItemModel>) {
+fun Drawer(menuItems: List<MenuItemModel>) {
     Column {
-        DrawerHeader(title)
+        DrawerHeader()
         DrawerBody(menuItems)
         DrawerUser()
     }
 }
 
 @Composable
-fun DrawerHeader(title: String) {
+fun DrawerHeader() {
     val image = painterResource(id = R.drawable.hajteklogov2)
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
-            ,
 
     ){
         Image(
@@ -67,32 +74,51 @@ fun DrawerBody(menuItems: List<MenuItemModel>) {
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()) {
         items(menuItems) { item ->
-            MenuItem(Icons.Default.Settings, menuItem = item)
+            MenuItem(menuItem = item) //tager her et icon? skal den det
         }
     }
 }
 
 @Composable
 fun DrawerUser() {
-    val image = Icons.Default.SwitchAccount
+    val context = LocalContext.current
     Box(modifier = Modifier
         .background(MaterialTheme.colors.background)
-        .fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter)
-    {
-        Card(
+        .fillMaxSize()
 
-            modifier = Modifier
-                .padding(8.dp)
-                .background(MaterialTheme.colors.background),
-            elevation = 6.dp
-        ) {
-            Column(
-                Modifier
-                    .background(Color.White)
-                    .fillMaxSize()
-            ){
-                Icon(
+    )
+    {
+        Box(modifier = Modifier.align(Alignment.BottomCenter))
+        {
+            Column() {
+                IconButton(onClick = {
+                    val intent = Intent(context, AccountActivity::class.java)
+                    ContextCompat.startActivity(context, intent, null)
+                },
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .align(CenterHorizontally)
+                ) {
+                    Icon(Icons.Default.ManageAccounts,
+                        contentDescription = "Account",
+                        modifier = Modifier.size(128.dp),
+                        tint = Color.Black)
+                }
+
+                Text(text = "John Test Person",
+                    fontSize = 30.sp,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
+
+/*
+Icon(
                 imageVector = image,
                 contentDescription = "Account",
                 modifier = Modifier
@@ -108,33 +134,32 @@ fun DrawerUser() {
                         .fillMaxWidth(),
                     color = Color.Black,
                     textAlign = TextAlign.Center
-                )}
+                )
 
-        }
+ */
 
-    }
-}
+
 
 @Preview
 @Composable
 fun DrawerPreview() {
     val menuItems = listOf(
-        MenuItemModel("1", "Home",  "Home") {
+        MenuItemModel(Icons.Filled.Email,"1", "Home",  "Inbox") {
             Log.v("DrawerPreview", "click home")
         },
-        MenuItemModel("2", "Settings", "Settings") {
+        MenuItemModel(Icons.Filled.Send,"2", "Settings", "Sent") {
             Log.v("DrawerPreview", "click settings")
         },
-        MenuItemModel("3", "Settings", "Settings") {
+        MenuItemModel(Icons.Default.Warning,"3", "Settings", "Spam") {
             Log.v("DrawerPreview", "click settings")
         },
-        MenuItemModel("4", "Settings", "Settings") {
+        MenuItemModel(Icons.Filled.Delete,"4", "Settings", "Trash") {
             Log.v("DrawerPreview", "click settings")
         },
     )
     AppTheme(darkTheme = true) {
         Drawer(
-            "My awesome menu", menuItems
+            menuItems
         )
     }
 }

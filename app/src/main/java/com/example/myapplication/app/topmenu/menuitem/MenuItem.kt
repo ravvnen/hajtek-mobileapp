@@ -26,7 +26,7 @@ import com.example.myapplication.app.theme.AppTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MenuItem(image: ImageVector, menuItem: MenuItemModel) {
+fun MenuItem(menuItem: MenuItemModel) {
     val context = LocalContext.current
     Card(
         onClick = {
@@ -43,7 +43,7 @@ fun MenuItem(image: ImageVector, menuItem: MenuItemModel) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center) {
             Icon(
-                imageVector = image,
+                imageVector = menuItem.Icon,
                 contentDescription = menuItem.title,
                 modifier = Modifier
                     //.fillMaxWidth()
@@ -70,8 +70,7 @@ fun MenuItem(image: ImageVector, menuItem: MenuItemModel) {
 @Composable
 fun MenuItemPreview() {
     AppTheme(darkTheme = true) {
-        MenuItem(Icons.Default.Home, MenuItemModel("1", "Home","Home") {
-            println("click")
+        MenuItem(MenuItemModel(Icons.Default.Home,"1", "Home","Home") {
         })
     }
 }
