@@ -81,13 +81,11 @@ class MainActivity : ComponentActivity() {
                             onNavigateToLogin = { showLoginPage = true }
                         )
                     }
-
-
                 }
             }
         }
-
     }
+
     private fun handleLogin(email: String, password: String) {
         val auth = Firebase.auth
         auth.signInWithEmailAndPassword(email, password)
@@ -120,95 +118,6 @@ class MainActivity : ComponentActivity() {
                     Toast.makeText(this, "Sign-up failed", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-}
-
-
-
-
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-fun Login_page(){
-    val context = LocalContext.current
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-        Box() {
-            Column(
-                Modifier
-                    .fillMaxSize(),
-                //horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(painterResource(id = R.drawable.hajteklogo2), contentDescription = null)
-                Text(
-                    text = "Welcome to your new mail client!",
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                val username = remember { mutableStateOf(TextFieldValue()) }
-                val password = remember { mutableStateOf(TextFieldValue()) }
-                val keyboardController = LocalSoftwareKeyboardController.current
-
-                OutlinedTextField(
-                    value = username.value,
-                    leadingIcon = { Icon(imageVector = Icons.Default.Email,
-                        contentDescription = "Icon",
-                        tint = Black
-                    ) },
-                    onValueChange = {
-                        username.value = it
-                    },
-                    label = { Text(text = "Username") },
-                    //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Black,
-                        focusedBorderColor = Black,
-                        unfocusedLabelColor = Black,
-                        unfocusedBorderColor = Black)
-                )
-
-                OutlinedTextField(
-                    value = password.value,
-                    leadingIcon = { Icon(imageVector = Icons.Default.Key,
-                        contentDescription = "Icon",
-                        tint = Black
-                    ) },
-                    onValueChange = {
-                        username.value = it
-                    },
-                    label = { Text(text = "Password") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Black,
-                        focusedBorderColor = Black,
-                        unfocusedLabelColor = Black,
-                        unfocusedBorderColor = Black)
-                )
-
-
-
-                //TextFieldWithIcons("Email address", Icons.Default.Email,KeyboardType.Email)
-                //TextFieldWithIcons("Password", Icons.Default.Key,KeyboardType.Password)
-
-
-
-                Button(onClick = { Toast.makeText(context, username.toString(), Toast.LENGTH_SHORT).show()}) {
-                    Text("Login")
-                }
-            }
-            Box(modifier = Modifier
-                .fillMaxSize(),
-                contentAlignment = Alignment.BottomStart) {
-                Text("Made by \nOliver Rosengreen Henriksen",
-                    style = TextStyle(
-                        color = Color.Gray,
-                        fontSize = 16.sp)
-                )
-            }
-        }
     }
 }
 

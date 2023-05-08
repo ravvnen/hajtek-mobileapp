@@ -1,8 +1,5 @@
 package com.example.myapplication.app
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -30,28 +27,13 @@ import com.example.myapplication.backend.EmailUtil
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 
+data class EmailOption(
+    val text: String,
+    val icon: ImageVector,
+    val onClick: () -> Unit
+)
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Surface(color = MaterialTheme.colors.background) {
-                SendEmailView()
-                //InboxView()
-                //TrashView()
-
-                /*SpamEmailsScreen(
-                    onEmailDeleted = {
-
-                    },
-                    onEmailMovedToInbox = {
-
-                    }
-                )*/
-            }
-        }
-    }
-
+object MailUtilComposables{
 
     @Composable
     fun InboxView() {
@@ -341,15 +323,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    data class EmailOption(
-        val text: String,
-        val icon: ImageVector,
-        val onClick: () -> Unit
-    )
-
-
 }
-
-
 
