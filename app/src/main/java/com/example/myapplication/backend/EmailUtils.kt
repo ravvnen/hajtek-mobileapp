@@ -147,6 +147,55 @@ object EmailUtil {
         fetchedInbox
     }
 
+    suspend fun fetchSent(host: String, username: String, password: String) : List<Email> = withContext(Dispatchers.IO){
+
+        val fetchedSent : MutableList<Email> = mutableListOf()
+
+        val properties = Properties().apply {
+            put("mail.store.protocol", "imaps")
+        }
+
+        val session = Session.getInstance(properties, null)
+        val store = session.getStore("imaps")
+        store.connect(host, username, password)
+
+        val sent = store.getFolder("[Gmail]/Sent")
+
+        if (sent.exists()) {
+            sent.open(Folder.READ_ONLY)
+        } else {
+            throw Exception("Sent is empty")
+        }
+
+
+        val messages = sent.messages
+
+        for (message in messages) {
+
+            val recipients = message.getRecipients(TO)
+            val toList = mutableListOf<String>()
+            if (recipients != null) {
+                for (recipient in recipients) {
+                    toList.add(recipient.toString())
+                }
+            }
+
+            var tmpEmail = Email(
+                message.messageNumber.toString(),
+                message.from[0].toString(),
+                toList,
+                message.subject ?: "empty",
+                message.content.toString(),
+                "",
+                message.receivedDate.toString(),
+                message.flags.contains(Flags.Flag.SEEN)
+            )
+
+            fetchedSent.add(tmpEmail)
+        }
+        fetchedSent
+    }
+
     suspend fun fetchSpamEmails(host: String, port: String, username: String, password: String): List<Email> = withContext(Dispatchers.IO) {
 
         val properties = Properties().apply {

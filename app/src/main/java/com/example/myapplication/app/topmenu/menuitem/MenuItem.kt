@@ -1,6 +1,7 @@
 package com.example.myapplication.app.topmenu.menuitem
 
 import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,10 +31,7 @@ import com.example.myapplication.app.theme.AppTheme
 fun MenuItem(menuItem: MenuItemModel) {
     val context = LocalContext.current
     Card(
-        onClick = {
-            val intent = Intent(context, ViewMailActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
-        },
+        onClick = { menuItem.onClick() },
         modifier = Modifier
             .padding(8.dp)
             .height(70.dp),
