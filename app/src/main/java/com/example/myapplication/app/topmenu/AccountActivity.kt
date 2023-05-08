@@ -73,7 +73,7 @@ class AccountActivity : ComponentActivity() {
                             defaultElevation = 10.dp
                         ),
                         shape = RoundedCornerShape(30),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
                     ) {
                         Text("Return", color = Color.White)
                     }
