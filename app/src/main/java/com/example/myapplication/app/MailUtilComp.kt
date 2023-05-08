@@ -14,14 +14,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoveToInbox
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
 import kotlinx.coroutines.*
@@ -143,71 +150,133 @@ object MailUtilComposables{
         }
     }
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
-    fun SendEmailView() {
+    fun SendEmailView(onEmailSent: () -> Unit) {
         var to by remember { mutableStateOf("") }
         var subject by remember { mutableStateOf("") }
         var body by remember { mutableStateOf("") }
 
         val context = LocalContext.current
 
-        Column(Modifier.padding(16.dp)) {
-            OutlinedTextField(
-                value = to,
-                onValueChange = { to = it },
-                label = { Text("To") }
-            )
-            OutlinedTextField(
-                value = subject,
-                onValueChange = { subject = it },
-                label = { Text("Subject") }
-            )
-            OutlinedTextField(
-                value = body,
-                onValueChange = { body = it },
-                label = { Text("Body") },
-                maxLines = 10
-            )
-            Button(
-                onClick = {
-                    val email = Email(
-                        id = "",
-                        from = EmailUtil.mailFrom,
-                        to = listOf(to),
-                        subject = subject,
-                        body = body,
-                        sentDate = LocalDateTime.now().toString(),
-                        receivedDate = "",
-                        isRead = false
-                    )
+        Column(Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)) {
+            Row(
+                Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "New mail",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Button(
+                    onClick = {
+                        val email = Email(
+                            id = "",
+                            from = EmailUtil.mailFrom,
+                            to = listOf(to),
+                            subject = subject,
+                            body = body,
+                            sentDate = LocalDateTime.now().toString(),
+                            receivedDate = "",
+                            isRead = false
+                        )
 
-                    CoroutineScope(Dispatchers.IO).launch {
-                        try {
-                            EmailUtil.sendEmail(
-                                host = "smtp.gmail.com",
-                                port = "587",
-                                username = EmailUtil.mailFrom,
-                                password = EmailUtil.password,
-                                mail = email
-                            )
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                EmailUtil.sendEmail(
+                                    host = "smtp.gmail.com",
+                                    port = "587",
+                                    username = EmailUtil.mailFrom,
+                                    password = EmailUtil.password,
+                                    mail = email
+                                )
 
-                            // Switch back to the main thread to show the toast
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(context, "Email sent", Toast.LENGTH_SHORT).show()
-                            }
-                        } catch (e: Exception) {
-                            // Handle any exceptions
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(context, "Failed to send email: ${e.message}", Toast.LENGTH_SHORT).show()
+                                // Switch back to the main thread to show the toast
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(context, "Email sent", Toast.LENGTH_SHORT).show()
+                                    onEmailSent()
+
+                                }
+                            } catch (e: Exception) {
+                                // Handle any exceptions
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(context, "Failed to send email: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
-                    }
-                },
-                modifier = Modifier.padding(top = 16.dp)
-            ) {
-                Text("Send")
+                    },
+                    shape = RoundedCornerShape(30),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
+
+
+                ) {
+                    Text("Send", color = Color.White)
+                }
+
             }
-        }
+            val focusManager = LocalFocusManager.current
+
+                OutlinedTextField(
+                    value = to,
+                    onValueChange = { to = it },
+                    label = { Text("To") },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedLabelColor = Color.Black,
+                        focusedBorderColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        unfocusedBorderColor = Color.Black
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = subject,
+                    onValueChange = { subject = it },
+                    label = { Text("Subject") },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedLabelColor = Color.Black,
+                        focusedBorderColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        unfocusedBorderColor = Color.Black
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = body,
+                    onValueChange = { body = it },
+                    label = { Text("Body") },
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+
+                    ),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedLabelColor = Color.Black,
+                        focusedBorderColor = Color.Black,
+                        unfocusedLabelColor = Color.Black,
+                        unfocusedBorderColor = Color.Black
+                    ),
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
+
     }
 
     @Composable

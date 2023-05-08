@@ -12,6 +12,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -58,7 +59,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(darkTheme = false) {
+            AppTheme(darkTheme = true) {
                 //LoginPage(onLogin = { email, password -> handleLogin(email, password) })
                 //Login_page()
 
@@ -127,7 +128,9 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
     var password by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -186,6 +189,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            shape = RoundedCornerShape(30),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Sign Up",
@@ -211,7 +215,8 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -267,6 +272,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            shape = RoundedCornerShape(30),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Login",
