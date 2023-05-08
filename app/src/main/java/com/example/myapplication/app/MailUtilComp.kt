@@ -346,7 +346,8 @@ object MailUtilComposables{
                 text = "Spam Emails",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                color = Color.Black
             )
             LazyColumn {
                 items(spamMails) { email ->
