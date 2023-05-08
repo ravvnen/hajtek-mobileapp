@@ -18,9 +18,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.example.myapplication.R
 import com.example.myapplication.app.theme.AppTheme
 import com.example.myapplication.app.topmenu.AppBar
@@ -30,30 +32,37 @@ import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import kotlinx.coroutines.launch
 
 class UIActivity : ComponentActivity() {
-    private val menuItems = listOf(
-        MenuItemModel(Icons.Filled.Email,"1", "Inbox",  "Inbox") {
-            val intent = Intent(this@UIActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel(Icons.Filled.Send,"2", "Sent",  "Sent") {
-            val intent = Intent(this@UIActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel(Icons.Default.Warning,"3", "Spam",  "Spam") {
-            val intent = Intent(this@UIActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-        MenuItemModel(Icons.Filled.Delete,"4", "Trash",  "Trash") {
-            val intent = Intent(this@UIActivity, InboxActivity::class.java)
-            startActivity(intent)
-        },
-    )
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContent {
             AppTheme(darkTheme = true) {
+                val context = LocalContext.current
+
+                val menuItems = listOf(
+                    MenuItemModel(Icons.Filled.Email,"1", "Inbox", "Inbox", onClick = {
+                        val intent = Intent(context, InboxActivity::class.java)
+                        ContextCompat.startActivity(context, intent, null)
+                    }),
+                    MenuItemModel(Icons.Filled.Send,"2", "Sent",  "Sent", onClick = {
+                        val intent = Intent(context, SentActivity::class.java)
+                        ContextCompat.startActivity(context, intent, null)
+                    }),
+                    MenuItemModel(Icons.Default.Warning,"3", "Spam",  "Spam", onClick = {
+                        val intent = Intent(context, SpamActivity::class.java)
+                        ContextCompat.startActivity(context, intent, null)
+                    }),
+                    MenuItemModel(Icons.Default.Delete,"4", "Trash",  "Trash", onClick = {
+                        val intent = Intent(context, TrashActivity::class.java)
+                        ContextCompat.startActivity(context, intent, null)
+                    })
+                )
+
+
                 val scaffoldState = rememberScaffoldState()
                 val scope = rememberCoroutineScope()
                 Scaffold(scaffoldState = scaffoldState, topBar = {
@@ -87,7 +96,6 @@ class UIActivity : ComponentActivity() {
                                 contentDescription = null
                             )
                         }
-                        Text(text = "and senior consultant Ravn", color = Color.Black, fontSize = 25.sp)
                     }
                 },
                     drawerContent = {

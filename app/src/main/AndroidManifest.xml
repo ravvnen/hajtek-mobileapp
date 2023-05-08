@@ -53,12 +53,38 @@
         </activity>
         <activity
             android:name=".app.topmenu.WriteMail"
+            android:name=".app.InboxActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".app.SpamActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".app.TrashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".app.SentActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
     </application>
 
 </manifest>

@@ -90,6 +90,57 @@ object MailUtilComposables{
     }
 
     @Composable
+    fun SentEmailsScreen(onEmailDeleted: (Email) -> Unit, onEmailMovedToInbox: (Email) -> Unit) {
+        val context = LocalContext.current
+
+        var sentMails by remember { mutableStateOf(listOf<Email>()) }
+
+        LaunchedEffect(Unit){
+            try {
+                val mails = EmailUtil.fetchSent("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
+                sentMails = mails
+            }catch (ex : Exception){
+                Toast.makeText(context, "Sent mail folder is empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val expandedMenuItemId = remember { mutableStateOf(-1) }
+        Column {
+            Text(
+                text = "Sent Emails",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+            )
+            LazyColumn {
+                items(sentMails) { email ->
+                    val menuExpanded = expandedMenuItemId.value == email.hashCode()
+                    val options = listOf(
+                        EmailOption("Delete", Icons.Default.Delete) {
+                            onEmailDeleted(email)
+                        },
+                        EmailOption("Move to Inbox", Icons.Default.MoveToInbox) {
+                            onEmailMovedToInbox(email)
+                        }
+                    )
+                    EmailItem(
+                        email = email,
+                        onItemHold = {
+                            if (menuExpanded) {
+                                expandedMenuItemId.value = -1
+                            } else {
+                                expandedMenuItemId.value = email.hashCode()
+                            }
+                        },
+                        showOptionsMenu = menuExpanded,
+                        options = options
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
     fun TrashView() {
 
         var emails by remember { mutableStateOf(listOf<Email>()) }
