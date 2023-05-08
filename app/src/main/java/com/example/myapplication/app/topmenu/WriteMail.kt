@@ -1,5 +1,6 @@
 package com.example.myapplication.app.topmenu
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,14 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.app.InboxActivity
 import com.example.myapplication.app.MailUtilComposables
+import com.example.myapplication.app.UIActivity
+import com.example.myapplication.app.theme.AppTheme
 
 
 class WriteMail : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MailUtilComposables.SendEmailView()
+            AppTheme(darkTheme = true) {
+                val intent = Intent(this@WriteMail, UIActivity::class.java)
+                MailUtilComposables.SendEmailView(onEmailSent = { startActivity(intent) })
+            }
         }
     }
 }
