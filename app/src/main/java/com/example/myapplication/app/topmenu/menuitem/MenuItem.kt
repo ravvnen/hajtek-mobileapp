@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -36,6 +37,7 @@ fun MenuItem(menuItem: MenuItemModel) {
         modifier = Modifier
             .padding(8.dp)
             .height(70.dp),
+        shape = RoundedCornerShape(30),
         backgroundColor = Color.White,
         elevation = 6.dp
     ) {
@@ -47,9 +49,10 @@ fun MenuItem(menuItem: MenuItemModel) {
                 contentDescription = menuItem.title,
                 modifier = Modifier
                     //.fillMaxWidth()
-                    .padding(5.dp)
+                    .padding(10.dp)
                     .wrapContentWidth(Alignment.Start)
-                    .size(50.dp)
+                    .size(50.dp),
+                tint = Color(0xFF0078CE)
             )
             Spacer(modifier = Modifier.width(width = 8.dp))
             /*
@@ -60,7 +63,7 @@ fun MenuItem(menuItem: MenuItemModel) {
                 fontSize = 20.sp,
                 modifier = Modifier.fillMaxWidth()
                     .padding(5.dp),
-                color = Color.Black, textAlign = TextAlign.Center
+                color = Color.Black, textAlign = TextAlign.Left
             )
         }
     }
