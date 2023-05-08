@@ -57,7 +57,11 @@ class UIActivity : ComponentActivity() {
                 val scaffoldState = rememberScaffoldState()
                 val scope = rememberCoroutineScope()
                 Scaffold(scaffoldState = scaffoldState, topBar = {
-                    AppBar(title = "Hajtek Mail Client") {
+                    AppBar(title = "Hajtek Mail Client",
+                        onWriteMail = {
+                            val intent = Intent(this@UIActivity, WriteMail::class.java)
+                            startActivity(intent)
+                        }) {
                         Log.v(this::class.simpleName, "before launch Click")
                         scope.launch {
                             Log.v(this::class.simpleName, "in launch launch Click")

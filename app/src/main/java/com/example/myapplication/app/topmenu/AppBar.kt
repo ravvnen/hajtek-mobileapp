@@ -1,5 +1,6 @@
 package com.example.myapplication.app.topmenu
 
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -12,14 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.app.topmenu.WriteMail
 import com.example.myapplication.app.theme.AppTheme
 import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 
 
 const val TAG_APP_BAR = "AppBar"
 
+
+
 @Composable
-fun AppBar(title: String, onMenu: () -> Unit) {
+fun AppBar(title: String, onWriteMail: () -> Unit, onMenu: () -> Unit) {
     TopAppBar(backgroundColor = MaterialTheme.colors.background,
         title = { Text(title) },
         navigationIcon = {
@@ -31,7 +35,11 @@ fun AppBar(title: String, onMenu: () -> Unit) {
             }
         },
         actions = {
-            Button(onClick = {/* OPEN WRITE MAIL VIEW */ },
+            Button(onClick = {
+                Log.v(TAG_APP_BAR, "New Mail")
+                onWriteMail()
+
+                },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE)))
             {
