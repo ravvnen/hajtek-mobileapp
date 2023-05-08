@@ -101,8 +101,8 @@ fun DrawerUser() {
                 ) {
                     Icon(Icons.Default.ManageAccounts,
                         contentDescription = "Account",
-                        modifier = Modifier.size(128.dp),
-                        tint = Color.Black)
+                        modifier = Modifier.size(64.dp),
+                        tint = Color.Gray)
                 }
 
                 Text(text = "John Test Person",
