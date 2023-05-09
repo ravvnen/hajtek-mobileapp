@@ -20,6 +20,7 @@ import jakarta.mail.Message.RecipientType.TO
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeMessage
 import jakarta.mail.search.FlagTerm
+import jakarta.mail.search.MessageNumberTerm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -310,6 +311,60 @@ object EmailUtil {
             // An exception occurred, return an error code or throw it
             throw Exception("Unable to delete email. It might already be deleted")
         }
+    }
+
+    suspend fun recoverMailToInboxByID(host: String, username: String, password: String, messageNumber: String, fromFolder: String) = withContext(Dispatchers.IO) {
+        val props = Properties()
+        props["mail.store.protocol"] = "imaps"
+        props["mail.imaps.host"] = host
+        props["mail.imaps.port"] = "993"
+        props["mail.imaps.starttls.enable"] = "true"
+
+        val session = Session.getDefaultInstance(props, null)
+        val store = session.getStore("imaps")
+        store.connect(host, username, password)
+
+        val sourceFolder = store.getFolder(fromFolder)
+        val targetFolder = store.getFolder("inbox")
+        sourceFolder.open(Folder.READ_WRITE)
+        targetFolder.open(Folder.READ_WRITE)
+        val messages = sourceFolder.search(MessageNumberTerm(messageNumber.toInt()))
+        if (messages.isNotEmpty()) {
+            val message = messages[0]
+            sourceFolder.copyMessages(arrayOf(message), targetFolder)
+            message.setFlag(Flags.Flag.DELETED, true)
+        }
+        sourceFolder.close(true)
+        targetFolder.close(true)
+        store.close()
+    }
+
+    suspend fun moveMailByID(host: String, username: String, password: String, messageNumber: String, fromFolder: String, toFolder: String) = withContext(Dispatchers.IO) {
+        val props = Properties()
+        props["mail.store.protocol"] = "imaps"
+        props["mail.imaps.host"] = host
+        props["mail.imaps.port"] = "993"
+        props["mail.imaps.starttls.enable"] = "true"
+
+        val session = Session.getDefaultInstance(props, null)
+        val store = session.getStore("imaps")
+        store.connect(host, username, password)
+
+        val sourceFolder = store.getFolder(fromFolder)
+        val targetFolder = store.getFolder(toFolder)
+        sourceFolder.open(Folder.READ_WRITE)
+        targetFolder.open(Folder.READ_WRITE)
+        val messages = sourceFolder.search(MessageNumberTerm(messageNumber.toInt()))
+
+        if (messages.isNotEmpty()) {
+            val message = messages[0]
+            sourceFolder.copyMessages(arrayOf(message), targetFolder)
+            message.setFlag(Flags.Flag.DELETED, true)
+        }
+
+        sourceFolder.close(true)
+        targetFolder.close(true)
+        store.close()
     }
 
 }
