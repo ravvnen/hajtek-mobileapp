@@ -1,33 +1,37 @@
-package com.example.MailClient.app.topmenu.menuitem
+package com.example.myapplication.app.topmenu.menuitem
 
 import android.content.Intent
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.HomeWork
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import com.example.MailClient.app.ViewMailActivity
-import com.example.MailClient.app.theme.AppTheme
+import com.example.myapplication.app.ViewMailActivity
+import com.example.myapplication.app.theme.AppTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MenuItem(menuItem: MenuItemModel) {
     val context = LocalContext.current
     Card(
-        onClick = {
-            val intent = Intent(context, ViewMailActivity::class.java)
-            ContextCompat.startActivity(context, intent, null)
-        },
+        onClick = { menuItem.onClick() },
         modifier = Modifier
             .padding(8.dp)
             .height(70.dp),

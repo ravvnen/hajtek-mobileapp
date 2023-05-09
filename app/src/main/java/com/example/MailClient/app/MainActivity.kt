@@ -1,23 +1,35 @@
-package com.example.MailClient.app
+package com.example.myapplication.app
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Key
+import androidx.compose.material.icons.filled.Password
+import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -30,19 +42,24 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.MailClient.app.theme.AppTheme
-import com.example.MailClient.app.topmenu.*
+import androidx.navigation.NavHostController
 import com.example.myapplication.R
-
+import com.example.myapplication.app.theme.AppTheme
+import com.example.myapplication.app.topmenu.AppBar
+import com.example.myapplication.app.topmenu.Drawer
+import com.example.myapplication.app.topmenu.*
+import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
+import com.example.myapplication.app.UIActivity
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(darkTheme = false) {
+            AppTheme(darkTheme = true) {
                 //LoginPage(onLogin = { email, password -> handleLogin(email, password) })
                 //Login_page()
 
@@ -65,13 +82,11 @@ class MainActivity : ComponentActivity() {
                             onNavigateToLogin = { showLoginPage = true }
                         )
                     }
-
-
                 }
             }
         }
-
     }
+
     private fun handleLogin(email: String, password: String) {
         val auth = Firebase.auth
         auth.signInWithEmailAndPassword(email, password)
@@ -107,102 +122,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-
-
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-fun Login_page(){
-    val context = LocalContext.current
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-        Box() {
-            Column(
-                Modifier
-                    .fillMaxSize(),
-                //horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(painterResource(id = R.drawable.hajteklogo2), contentDescription = null)
-                Text(
-                    text = "Welcome to your new mail client!",
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                val username = remember { mutableStateOf(TextFieldValue()) }
-                val password = remember { mutableStateOf(TextFieldValue()) }
-                val keyboardController = LocalSoftwareKeyboardController.current
-
-                OutlinedTextField(
-                    value = username.value,
-                    leadingIcon = { Icon(imageVector = Icons.Default.Email,
-                        contentDescription = "Icon",
-                        tint = Black
-                    ) },
-                    onValueChange = {
-                        username.value = it
-                    },
-                    label = { Text(text = "Username") },
-                    //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Black,
-                        focusedBorderColor = Black,
-                        unfocusedLabelColor = Black,
-                        unfocusedBorderColor = Black)
-                )
-
-                OutlinedTextField(
-                    value = password.value,
-                    leadingIcon = { Icon(imageVector = Icons.Default.Key,
-                        contentDescription = "Icon",
-                        tint = Black
-                    ) },
-                    onValueChange = {
-                        username.value = it
-                    },
-                    label = { Text(text = "Password") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Black,
-                        focusedBorderColor = Black,
-                        unfocusedLabelColor = Black,
-                        unfocusedBorderColor = Black)
-                )
-
-
-
-                //TextFieldWithIcons("Email address", Icons.Default.Email,KeyboardType.Email)
-                //TextFieldWithIcons("Password", Icons.Default.Key,KeyboardType.Password)
-
-
-
-                Button(onClick = { Toast.makeText(context, username.toString(), Toast.LENGTH_SHORT).show()}) {
-                    Text("Login")
-                }
-            }
-            Box(modifier = Modifier
-                .fillMaxSize(),
-                contentAlignment = Alignment.BottomStart) {
-                Text("Made by \nOliver Rosengreen Henriksen",
-                    style = TextStyle(
-                        color = Color.Gray,
-                        fontSize = 16.sp)
-                )
-            }
-        }
-    }
-}
-
 @Composable
 fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateToLogin: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -261,6 +189,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            shape = RoundedCornerShape(30),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Sign Up",
@@ -286,7 +215,8 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -342,6 +272,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            shape = RoundedCornerShape(30),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Login",

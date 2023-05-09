@@ -1,3 +1,5 @@
 # Default ignored files
+.DSStore
+/local.properties
 /shelf/
 /workspace.xml
