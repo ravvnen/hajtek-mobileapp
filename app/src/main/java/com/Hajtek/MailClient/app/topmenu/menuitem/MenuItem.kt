@@ -1,4 +1,4 @@
-package com.example.myapplication.app.topmenu.menuitem
+package com.Hajtek.MailClient.app.topmenu.menuitem
 
 import android.content.Intent
 import androidx.activity.ComponentActivity
@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import com.example.myapplication.app.ViewMailActivity
-import com.example.myapplication.app.theme.AppTheme
+import com.Hajtek.MailClient.app.ViewMailActivity
+import com.Hajtek.MailClient.app.theme.AppTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

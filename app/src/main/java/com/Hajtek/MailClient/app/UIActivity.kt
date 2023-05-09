@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.myapplication.R
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.AppBar
-import com.example.myapplication.app.topmenu.Drawer
-import com.example.myapplication.app.topmenu.*
-import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
+import com.Hajtek.MailClient.app.theme.AppTheme
+import com.Hajtek.MailClient.app.topmenu.AppBar
+import com.Hajtek.MailClient.app.topmenu.Drawer
+import com.Hajtek.MailClient.app.topmenu.*
+import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItemModel
 import kotlinx.coroutines.launch
 
 class UIActivity : ComponentActivity() {
@@ -45,7 +45,7 @@ class UIActivity : ComponentActivity() {
 
                 val menuItems = listOf(
                     MenuItemModel(Icons.Filled.Email,"1", "Inbox", "Inbox", onClick = {
-                        val intent = Intent(context, InboxActivity::class.java)
+                        val intent = Intent(context, com.Hajtek.MailClient.app.InboxActivity::class.java)
                         ContextCompat.startActivity(context, intent, null)
                     }),
                     MenuItemModel(Icons.Filled.Send,"2", "Sent",  "Sent", onClick = {

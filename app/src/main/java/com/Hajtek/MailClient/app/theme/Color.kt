@@ -1,4 +1,4 @@
-package com.example.myapplication.app.theme
+package com.Hajtek.MailClient.app.theme
 
 import androidx.compose.ui.graphics.Color
 

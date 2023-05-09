@@ -1,4 +1,4 @@
-package com.example.myapplication.app.topmenu.menuitem
+package com.Hajtek.MailClient.app.topmenu.menuitem
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.graphics.vector.ImageVector

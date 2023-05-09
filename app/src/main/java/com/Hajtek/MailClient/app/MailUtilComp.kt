@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -30,8 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import com.example.myapplication.backend.Email
-import com.example.myapplication.backend.EmailUtil
+import com.Hajtek.MailClient.backend.Email
+import com.Hajtek.MailClient.backend.EmailUtil
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 
@@ -312,14 +312,17 @@ object MailUtilComposables{
                 items(sentMails) { email ->
                     val menuExpanded = expandedMenuItemId.value == email.hashCode()
                     val options = listOf(
-                        EmailOption("Delete", Icons.Default.Delete) {
+                        com.Hajtek.MailClient.app.EmailOption("Delete", Icons.Default.Delete) {
                             onEmailDeleted(email)
                         },
-                        EmailOption("Move to Inbox", Icons.Default.MoveToInbox) {
+                        com.Hajtek.MailClient.app.EmailOption(
+                            "Move to Inbox",
+                            Icons.Default.MoveToInbox
+                        ) {
                             onEmailMovedToInbox(email)
                         }
                     )
-                    EmailItem(
+                    com.Hajtek.MailClient.app.MailUtilComposables.EmailItem(
                         email = email,
                         onItemHold = {
                             if (menuExpanded) {
@@ -538,14 +541,17 @@ object MailUtilComposables{
                 items(spamMails) { email ->
                     val menuExpanded = expandedMenuItemId.value == email.hashCode()
                     val options = listOf(
-                        EmailOption("Delete", Icons.Default.Delete) {
+                        com.Hajtek.MailClient.app.EmailOption("Delete", Icons.Default.Delete) {
                             onEmailDeleted(email)
                         },
-                        EmailOption("Move to Inbox", Icons.Default.MoveToInbox) {
+                        com.Hajtek.MailClient.app.EmailOption(
+                            "Move to Inbox",
+                            Icons.Default.MoveToInbox
+                        ) {
                             onEmailMovedToInbox(email)
                         }
                     )
-                    EmailItem(
+                    com.Hajtek.MailClient.app.MailUtilComposables.EmailItem(
                         email = email,
                         onItemHold = {
                             if (menuExpanded) {
@@ -563,7 +569,7 @@ object MailUtilComposables{
     }
 
     @Composable
-    fun EmailItem(email: Email, onItemHold: () -> Unit, showOptionsMenu: Boolean = false, options: List<EmailOption> = emptyList()) {
+    fun EmailItem(email: Email, onItemHold: () -> Unit, showOptionsMenu: Boolean = false, options: List<com.Hajtek.MailClient.app.EmailOption> = emptyList()) {
         val backgroundColor = if (email.isRead) Color.White else Color.LightGray
         Card(
             modifier = Modifier

@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,9 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.app.theme.AppTheme
+import com.Hajtek.MailClient.app.theme.AppTheme
 
-class SpamActivity : ComponentActivity() {
+class SentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -30,7 +30,7 @@ class SpamActivity : ComponentActivity() {
                          */
 
                         Text(
-                            text = "Spam",
+                            text = "Sent",
                             fontSize = 36.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 30.dp, vertical = 8.dp),
@@ -38,18 +38,18 @@ class SpamActivity : ComponentActivity() {
                         )
                     }
 
-                    MailUtilComposables.SpamView()
+                    com.Hajtek.MailClient.app.MailUtilComposables.SentView()
 
                     /*
-                    MailUtilComposables.SpamEmailsScreen(
+                    MailUtilComposables.SentEmailsScreen(
                         onEmailDeleted = {
                         },
                         onEmailMovedToInbox = {
-
                         })
-
                      */
+
                 }
+
 
 
 

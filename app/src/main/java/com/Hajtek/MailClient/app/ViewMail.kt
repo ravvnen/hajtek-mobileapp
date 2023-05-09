@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,15 +23,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.WriteMail
-import com.example.myapplication.backend.Amascut_Bosses
-import com.example.myapplication.backend.Email
-import com.example.myapplication.backend.EmailUtil
+import com.Hajtek.MailClient.app.theme.AppTheme
+import com.Hajtek.MailClient.app.topmenu.WriteMail
+import com.Hajtek.MailClient.backend.Amascut_Bosses
+import com.Hajtek.MailClient.backend.Email
+import com.Hajtek.MailClient.backend.EmailUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class InboxActivity : ComponentActivity() {
+class ViewMail : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent() {
@@ -57,7 +57,7 @@ class InboxActivity : ComponentActivity() {
                         )
                     }
 
-                    MailUtilComposables.InboxView()
+                    com.Hajtek.MailClient.app.MailUtilComposables.InboxView()
                 }
 
 

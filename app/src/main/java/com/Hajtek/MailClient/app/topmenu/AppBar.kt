@@ -1,4 +1,4 @@
-package com.example.myapplication.app.topmenu
+package com.Hajtek.MailClient.app.topmenu
 
 import android.content.Intent
 import android.util.Log
@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.app.topmenu.WriteMail
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
+import com.Hajtek.MailClient.app.topmenu.WriteMail
+import com.Hajtek.MailClient.app.theme.AppTheme
+import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItemModel
 
 
 const val TAG_APP_BAR = "AppBar"

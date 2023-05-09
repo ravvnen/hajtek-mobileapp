@@ -1,4 +1,4 @@
-package com.example.myapplication.backend
+package com.Hajtek.MailClient.backend
 
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalConfiguration

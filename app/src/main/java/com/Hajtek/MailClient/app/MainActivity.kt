@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -44,15 +44,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.myapplication.R
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.AppBar
-import com.example.myapplication.app.topmenu.Drawer
-import com.example.myapplication.app.topmenu.*
-import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
+import com.Hajtek.MailClient.app.theme.AppTheme
+import com.Hajtek.MailClient.app.topmenu.AppBar
+import com.Hajtek.MailClient.app.topmenu.Drawer
+import com.Hajtek.MailClient.app.topmenu.*
+import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItemModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import com.example.myapplication.app.UIActivity
+import com.Hajtek.MailClient.app.UIActivity
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

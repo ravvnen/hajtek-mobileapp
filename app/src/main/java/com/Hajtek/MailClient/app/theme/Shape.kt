@@ -1,4 +1,4 @@
-package com.example.myapplication.app.theme
+package com.Hajtek.MailClient.app.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

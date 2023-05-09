@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.Hajtek.MailClient.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.app.theme.AppTheme
+import com.Hajtek.MailClient.app.theme.AppTheme
 
 class TrashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class TrashActivity : ComponentActivity() {
                         )
                     }
 
-                    MailUtilComposables.TrashView()
+                    com.Hajtek.MailClient.app.MailUtilComposables.TrashView()
                 }
 
 

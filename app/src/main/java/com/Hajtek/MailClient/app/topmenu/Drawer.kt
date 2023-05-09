@@ -1,4 +1,4 @@
-package com.example.myapplication.app.topmenu
+package com.Hajtek.MailClient.app.topmenu
 
 import android.content.Intent
 import android.media.Image
@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.myapplication.R
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.menuitem.MenuItem
-import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
+import com.Hajtek.MailClient.app.theme.AppTheme
+import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItem
+import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItemModel
 
 
 /*

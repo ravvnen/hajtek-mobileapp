@@ -1,4 +1,4 @@
-package com.example.myapplication.backend
+package com.Hajtek.MailClient.backend
 
 import com.example.myapplication.R
 

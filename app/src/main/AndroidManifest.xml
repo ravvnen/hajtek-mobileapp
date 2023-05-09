@@ -60,7 +60,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".app.InboxActivity"
+            android:name="com.Hajtek.MailClient.app.InboxActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">
             <meta-data
