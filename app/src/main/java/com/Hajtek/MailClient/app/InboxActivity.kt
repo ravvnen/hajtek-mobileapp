@@ -1,35 +1,16 @@
 package com.Hajtek.MailClient.app
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.Hajtek.MailClient.app.theme.AppTheme
-import com.Hajtek.MailClient.app.topmenu.WriteMail
-import com.Hajtek.MailClient.backend.Amascut_Bosses
-import com.Hajtek.MailClient.backend.Email
-import com.Hajtek.MailClient.backend.EmailUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class InboxActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

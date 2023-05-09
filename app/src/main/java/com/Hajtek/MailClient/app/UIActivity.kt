@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import com.example.myapplication.R
+import com.Hajtek.MailClient.R
 import com.Hajtek.MailClient.app.theme.AppTheme
 import com.Hajtek.MailClient.app.topmenu.AppBar
 import com.Hajtek.MailClient.app.topmenu.Drawer

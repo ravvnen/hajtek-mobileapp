@@ -43,7 +43,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.myapplication.R
+import com.Hajtek.MailClient.R
 import com.Hajtek.MailClient.app.theme.AppTheme
 import com.Hajtek.MailClient.app.topmenu.AppBar
 import com.Hajtek.MailClient.app.topmenu.Drawer

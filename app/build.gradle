@@ -2,14 +2,15 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+
 }
 
 android {
-    namespace 'com.example.myapplication'
+    namespace 'com.Hajtek.MailClient'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.Hajtek.MailClient"
         minSdk 30
         targetSdk 33
         versionCode 1
