@@ -1,4 +1,4 @@
-package com.example.myapplication.app.topmenu
+package com.example.MailClient.app.topmenu
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

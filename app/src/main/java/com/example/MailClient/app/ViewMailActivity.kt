@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.example.MailClient.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,8 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.backend.Amascut_Bosses
+import com.example.MailClient.app.theme.AppTheme
+import com.example.MailClient.backend.Amascut_Bosses
 
 class ViewMailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

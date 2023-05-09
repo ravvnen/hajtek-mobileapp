@@ -1,4 +1,4 @@
-package com.example.myapplication.app
+package com.example.MailClient.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -21,12 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.MailClient.app.theme.AppTheme
+import com.example.MailClient.app.topmenu.AppBar
+import com.example.MailClient.app.topmenu.Drawer
+import com.example.MailClient.app.topmenu.*
+import com.example.MailClient.app.topmenu.menuitem.MenuItemModel
 import com.example.myapplication.R
-import com.example.myapplication.app.theme.AppTheme
-import com.example.myapplication.app.topmenu.AppBar
-import com.example.myapplication.app.topmenu.Drawer
-import com.example.myapplication.app.topmenu.*
-import com.example.myapplication.app.topmenu.menuitem.MenuItemModel
 import kotlinx.coroutines.launch
 
 class UIActivity : ComponentActivity() {
