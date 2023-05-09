@@ -159,7 +159,9 @@ object EmailUtil {
         val store = session.getStore("imaps")
         store.connect(host, username, password)
 
-        val sent = store.getFolder("[Gmail]/Sent")
+        val sent = store.getFolder("[Gmail]/Sendte mails")
+
+
 
         if (sent.exists()) {
             sent.open(Folder.READ_ONLY)

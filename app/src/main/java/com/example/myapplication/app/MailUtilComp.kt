@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
 import kotlinx.coroutines.*
@@ -77,19 +78,213 @@ object MailUtilComposables{
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Column {
+                    Column(horizontalAlignment = Alignment.Start) {
                         Text(
                             text = "From: ${email.from}",
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+
+                        )
+                        Text(
+                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "Subject: ${email.subject}",
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun SpamView() {
+
+        var emails by remember { mutableStateOf(listOf<Email>()) }
+
+        val context = LocalContext.current
+
+        LaunchedEffect(Unit){
+            try {
+                val mails = EmailUtil.fetchSpamEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
+                emails = mails
+            }catch(e : Throwable){
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        LazyColumn {
+            items(emails) { email ->
+                Button(
+                    onClick = { /* Navigate to full email */ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 8.dp
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Column(horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = "From: ${email.from}",
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+
                         )
                         Text(
-                            text = "Received: ${email.receivedDate}",
-                            fontWeight = FontWeight.Normal
+                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
                         )
+                        Text(
+                            text = "Subject: ${email.subject}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun SentView() {
+
+        var emails by remember { mutableStateOf(listOf<Email>()) }
+
+        val context = LocalContext.current
+
+        LaunchedEffect(Unit){
+            try {
+                val mails = EmailUtil.fetchSent("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
+                emails = mails
+            }catch(e : Throwable){
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        LazyColumn {
+            items(emails) { email ->
+                Button(
+                    onClick = { /* Navigate to full email */ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 8.dp
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Column(horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = "From: ${email.from}",
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+
+                        )
+                        Text(
+                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            text = "Subject: ${email.subject}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun TrashView() {
+
+        var emails by remember { mutableStateOf(listOf<Email>()) }
+
+        val context = LocalContext.current
+
+        LaunchedEffect(Unit){
+            try {
+                val mails = EmailUtil.fetchTrashEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
+                emails = mails
+            }catch(e : Throwable){
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        LazyColumn {
+            items(emails) { email ->
+                Button(
+                    onClick = { /* Navigate to full email */ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 8.dp
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Column(horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = "From: ${email.from}",
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+
+                        )
+                        Text(
+                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Text(
+                            text = "Subject: ${email.subject}",
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
                     }
                 }
             }
@@ -113,12 +308,6 @@ object MailUtilComposables{
 
         val expandedMenuItemId = remember { mutableStateOf(-1) }
         Column {
-            Text(
-                text = "Sent Emails",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
-            )
             LazyColumn {
                 items(sentMails) { email ->
                     val menuExpanded = expandedMenuItemId.value == email.hashCode()
@@ -148,7 +337,7 @@ object MailUtilComposables{
     }
 
     @Composable
-    fun TrashView() {
+    fun TrashView1() {
 
         var emails by remember { mutableStateOf(listOf<Email>()) }
 
@@ -185,15 +374,18 @@ object MailUtilComposables{
                     Column {
                         Text(
                             text = "From: ${email.from}",
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
                         )
                         Text(
                             text = "Subject: ${email.subject}",
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
                         )
                         Text(
                             text = "Received: ${email.receivedDate}",
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
                         )
                     }
                 }
@@ -342,13 +534,6 @@ object MailUtilComposables{
 
         val expandedMenuItemId = remember { mutableStateOf(-1) }
         Column {
-            Text(
-                text = "Spam Emails",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
-                color = Color.Black
-            )
             LazyColumn {
                 items(spamMails) { email ->
                     val menuExpanded = expandedMenuItemId.value == email.hashCode()
@@ -393,22 +578,20 @@ object MailUtilComposables{
                     .clickable { },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Checkbox(
-                    checked = email.isRead,
-                    onCheckedChange = { },
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Text(
-                    text = email.from,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp)
-                )
-                Text(
-                    text = email.sentDate,
-                    modifier = Modifier.padding(end = 8.dp)
-                )
+                Column() {
+                    Text(
+                        text = email.from,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                    )
+                    Text(
+                        text = email.sentDate,
+                        modifier = Modifier.padding(end = 8.dp),
+                        color = Color.Black
+                    )
+                }
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
@@ -437,7 +620,8 @@ object MailUtilComposables{
                         )
                         Text(
                             text = option.text,
-                            modifier = Modifier.padding(end = 8.dp)
+                            modifier = Modifier.padding(end = 8.dp),
+                            color = Color.Black
                         )
                     }
                 }
