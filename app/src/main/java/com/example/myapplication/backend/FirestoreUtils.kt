@@ -8,43 +8,49 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.*
 
 object FirestoreUtils {
 
     data class FireStoreUser(
-        val FirstName : String = "",
-        val LastName : String = "",
+        val firstName : String = "",
+        val lastName : String = "",
         val emailAddress : String = "",
+        val password : String = "",
         val smtpHost : String = "",
         val smtpPort : String = "",
         val imapHost : String = "",
         val imapPort : String = ""
     )
 
-    suspend fun fetchUserData(context: CoroutineContext, currentUser: FirebaseUser) = withContext(Dispatchers.IO){
-
-        //user to be returned
-        var activeUser : FireStoreUser = FireStoreUser()
+    suspend fun fetchUserData(currentUser: FirebaseUser): FireStoreUser = suspendCoroutine { continuation ->
 
         //get uid
         val uid = currentUser.uid
 
+        //create firestore instance
         val fireDB = Firebase.firestore
 
+        //get the collection
         val userRef = fireDB.collection("users").document(uid)
             .get()
             .addOnSuccessListener { document ->
-            if (document != null) {
-                activeUser = document.toObject<FireStoreUser>()!!
-            }else
-            {
-                throw Exception("Failed to fetch account")
+                if (document != null) {
+                    val activeUser = document.toObject<FireStoreUser>()
+                    if (activeUser != null) {
+                        continuation.resume(activeUser)
+                    } else {
+                        continuation.resumeWithException(Exception("Failed to fetch account"))
+                    }
+                } else {
+                    continuation.resumeWithException(Exception("Failed to fetch account"))
+                }
             }
-        }
-
-        activeUser
+            .addOnFailureListener { exception ->
+                continuation.resumeWithException(exception)
+            }
     }
+
 
 
     suspend fun writeUserData(context: Context, newUser : FirebaseUser) = withContext(Dispatchers.IO){
@@ -68,9 +74,10 @@ object FirestoreUtils {
         val fireDB = Firebase.firestore
 
         val updates = hashMapOf<String, Any>(
-            "FirstName" to updatedData.FirstName,
-            "LastName" to updatedData.LastName,
+            "FirstName" to updatedData.firstName,
+            "LastName" to updatedData.lastName,
             "emailAddress" to updatedData.emailAddress,
+            "password" to updatedData.password,
             "smtpHost" to updatedData.smtpHost,
             "smtpPort" to updatedData.smtpPort,
             "imapHost" to updatedData.imapHost,

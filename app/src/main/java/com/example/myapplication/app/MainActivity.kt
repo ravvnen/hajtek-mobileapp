@@ -33,6 +33,9 @@ import com.example.myapplication.backend.FirestoreUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
+
+var activeUser = FirestoreUtils.FireStoreUser()
+
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,19 +81,16 @@ class MainActivity : ComponentActivity() {
                     //intent.putExtra("kode", user?.email)
                     startActivity(intent)
 
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch{
                         try {
-                            if (user != null) {
-                                FirestoreUtils.fetchUserData(this.coroutineContext, user)
-                            }else{
-                                throw Exception()
+                            if(user != null){
+                                val tmpFetch = FirestoreUtils.fetchUserData(currentUser = user)
+                                activeUser = tmpFetch
                             }
-                        } catch (e: Exception) {
-
+                        }catch (ex : Exception){
+                            Toast.makeText(this@MainActivity, "Account could not be found in database", Toast.LENGTH_SHORT).show()
                         }
                     }
-
-
 
                 } else {
                     // Login failed

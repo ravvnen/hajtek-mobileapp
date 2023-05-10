@@ -119,7 +119,6 @@ object EmailUtil {
             throw Exception("Inbox is empty")
         }
 
-
         val messages = inbox.messages
 
         for (message in messages) {
