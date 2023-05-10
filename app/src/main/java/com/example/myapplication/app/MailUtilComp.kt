@@ -22,7 +22,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
@@ -38,7 +37,7 @@ object MailUtilComposables{
     @Composable
     fun InboxView() {
 
-        var emails by remember { mutableStateOf(listOf<Email>()) }
+        var emails by remember { mutableStateOf(listOf<EmailUtil.Email>()) }
 
         val context = LocalContext.current
 
@@ -90,10 +89,10 @@ object MailUtilComposables{
     }
 
     @Composable
-    fun SentEmailsScreen(onEmailDeleted: (Email) -> Unit, onEmailMovedToInbox: (Email) -> Unit) {
+    fun SentEmailsScreen(onEmailDeleted: (EmailUtil.Email) -> Unit, onEmailMovedToInbox: (EmailUtil.Email) -> Unit) {
         val context = LocalContext.current
 
-        var sentMails by remember { mutableStateOf(listOf<Email>()) }
+        var sentMails by remember { mutableStateOf(listOf<EmailUtil.Email>()) }
 
         LaunchedEffect(Unit){
             try {
@@ -143,7 +142,7 @@ object MailUtilComposables{
     @Composable
     fun TrashView() {
 
-        var emails by remember { mutableStateOf(listOf<Email>()) }
+        var emails by remember { mutableStateOf(listOf<EmailUtil.Email>()) }
 
         var context = LocalContext.current
 
@@ -221,7 +220,7 @@ object MailUtilComposables{
             )
             Button(
                 onClick = {
-                    val email = Email(
+                    val email = EmailUtil.Email(
                         id = "",
                         from = EmailUtil.mailFrom,
                         to = listOf(to),
@@ -262,9 +261,9 @@ object MailUtilComposables{
     }
 
     @Composable
-    fun SpamEmailsScreen(onEmailDeleted: (Email) -> Unit, onEmailMovedToInbox: (Email) -> Unit) {
+    fun SpamEmailsScreen(onEmailDeleted: (EmailUtil.Email) -> Unit, onEmailMovedToInbox: (EmailUtil.Email) -> Unit) {
 
-        var spamMails by remember { mutableStateOf(listOf<Email>()) }
+        var spamMails by remember { mutableStateOf(listOf<EmailUtil.Email>()) }
 
         LaunchedEffect(Unit){
             val mails = EmailUtil.fetchSpamEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
@@ -308,7 +307,7 @@ object MailUtilComposables{
     }
 
     @Composable
-    fun EmailItem(email: Email, onItemHold: () -> Unit, showOptionsMenu: Boolean = false, options: List<EmailOption> = emptyList()) {
+    fun EmailItem(email: EmailUtil.Email, onItemHold: () -> Unit, showOptionsMenu: Boolean = false, options: List<EmailOption> = emptyList()) {
         val backgroundColor = if (email.isRead) Color.White else Color.LightGray
         Card(
             modifier = Modifier

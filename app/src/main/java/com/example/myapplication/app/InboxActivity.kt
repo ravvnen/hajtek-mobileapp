@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.app.theme.AppTheme
 import com.example.myapplication.backend.Amascut_Bosses
-import com.example.myapplication.backend.Email
 import com.example.myapplication.backend.EmailUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

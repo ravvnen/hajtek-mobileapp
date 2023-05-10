@@ -36,18 +36,18 @@ import kotlin.collections.mutableListOf
 import org.apache.commons.codec.binary.Base64
 
 
-data class Email(
-    val id : String,
-    val from: String,
-    val to: List<String>,
-    val subject: String,
-    val body: String,
-    val sentDate: String,
-    val receivedDate: String,
-    val isRead : Boolean
-)
-
 object EmailUtil {
+
+    data class Email(
+        val id : String,
+        val from: String,
+        val to: List<String>,
+        val subject: String,
+        val body: String,
+        val sentDate: String,
+        val receivedDate: String,
+        val isRead : Boolean
+    )
 
     val mailFrom : String = "testemailappuser@gmail.com"
     val password : String = "ffabdfjtpgsqtlht"
@@ -160,14 +160,7 @@ object EmailUtil {
         val store = session.getStore("imaps")
         store.connect(host, username, password)
 
-        val sent = store.getFolder("[Gmail]/Sent")
-
-        if (sent.exists()) {
-            sent.open(Folder.READ_ONLY)
-        } else {
-            throw Exception("Sent is empty")
-        }
-
+        val sent = store.getFolder("[Gmail]/Sendte mails")
 
         val messages = sent.messages
 
