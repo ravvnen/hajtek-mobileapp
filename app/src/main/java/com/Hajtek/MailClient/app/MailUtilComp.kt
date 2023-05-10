@@ -88,8 +88,8 @@ object MailUtilComposables{
                     ),
                     shape = RoundedCornerShape(16.dp),
                     elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 8.dp
+                        defaultElevation = 4.dp,
+                        pressedElevation = 4.dp
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -146,10 +146,11 @@ object MailUtilComposables{
                     Column(horizontalAlignment = Alignment.Start,
                     modifier = Modifier
                         .padding(16.dp)) {
-                        Card() {
+                        Card(elevation = 4.dp,
+                        shape = RoundedCornerShape(16.dp)) {
                             Column(
                                 modifier = Modifier
-                                    .padding(8.dp)
+                                    .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
                                 Text(
                                     text = mailSubject,
@@ -178,10 +179,11 @@ object MailUtilComposables{
                         }
                         Spacer(modifier = Modifier.size(8.dp))
 
-                        Card() {
+                        Card(elevation = 4.dp,
+                            shape = RoundedCornerShape(16.dp)) {
                             Column(
                                 modifier = Modifier
-                                    .padding(8.dp)
+                                    .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
                                 Text(
                                     text = mailBody,
@@ -233,8 +235,8 @@ object MailUtilComposables{
                     ),
                     shape = RoundedCornerShape(16.dp),
                     elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 8.dp
+                        defaultElevation = 4.dp,
+                        pressedElevation = 4.dp
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -317,8 +319,8 @@ object MailUtilComposables{
                     ),
                     shape = RoundedCornerShape(16.dp),
                     elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 8.dp
+                        defaultElevation = 4.dp,
+                        pressedElevation = 4.dp
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -401,8 +403,8 @@ object MailUtilComposables{
                     ),
                     shape = RoundedCornerShape(16.dp),
                     elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 8.dp
+                        defaultElevation = 4.dp,
+                        pressedElevation = 4.dp
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -470,7 +472,7 @@ object MailUtilComposables{
             ) {
                 Text(
                     text = "New mail",
-                    fontSize = 20.sp,
+                    fontSize = 36.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Button(
@@ -510,7 +512,7 @@ object MailUtilComposables{
                             }
                         }
                     },
-                    shape = RoundedCornerShape(30),
+                    shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
 
 
@@ -525,15 +527,16 @@ object MailUtilComposables{
                     value = to,
                     onValueChange = { to = it },
                     label = { Text("To") },
+                    shape = RoundedCornerShape(16.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Color.Black,
-                        focusedBorderColor = Color.Black,
-                        unfocusedLabelColor = Color.Black,
-                        unfocusedBorderColor = Color.Black
+                        focusedLabelColor = Color.Gray,
+                        focusedBorderColor = Color.Gray,
+                        unfocusedLabelColor = Color.Gray,
+                        unfocusedBorderColor = Color.Gray
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -542,15 +545,16 @@ object MailUtilComposables{
                     value = subject,
                     onValueChange = { subject = it },
                     label = { Text("Subject") },
+                    shape = RoundedCornerShape(16.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
                     ),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Color.Black,
-                        focusedBorderColor = Color.Black,
-                        unfocusedLabelColor = Color.Black,
-                        unfocusedBorderColor = Color.Black
+                        focusedLabelColor = Color.Gray,
+                        focusedBorderColor = Color.Gray,
+                        unfocusedLabelColor = Color.Gray,
+                        unfocusedBorderColor = Color.Gray
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -559,6 +563,7 @@ object MailUtilComposables{
                     value = body,
                     onValueChange = { body = it },
                     label = { Text("Body") },
+                    shape = RoundedCornerShape(16.dp),
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
@@ -569,10 +574,10 @@ object MailUtilComposables{
 
                     ),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedLabelColor = Color.Black,
-                        focusedBorderColor = Color.Black,
-                        unfocusedLabelColor = Color.Black,
-                        unfocusedBorderColor = Color.Black
+                        focusedLabelColor = Color.Gray,
+                        focusedBorderColor = Color.Gray,
+                        unfocusedLabelColor = Color.Gray,
+                        unfocusedBorderColor = Color.Gray
                     ),
                     modifier = Modifier
                         .fillMaxSize()

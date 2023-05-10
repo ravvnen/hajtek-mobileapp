@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.Hajtek.MailClient.R
+import com.Hajtek.MailClient.app.activeUser
 import com.Hajtek.MailClient.app.theme.AppTheme
 import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItem
 import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItemModel
@@ -87,37 +90,38 @@ fun DrawerUser() {
 
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 18.dp, vertical = 18.dp),
-        shape = RoundedCornerShape(15),
+        .padding(horizontal = 18.dp, vertical = 18.dp)
+        .clickable{ val intent = Intent(context, AccountActivity::class.java)
+            ContextCompat.startActivity(context, intent, null) },
+        shape = RoundedCornerShape(16.dp),
         backgroundColor = Color.White,
-        elevation = 6.dp)
+        elevation = 4.dp)
 
         {
             Column(modifier = Modifier
-                .padding(16.dp)) {
-                IconButton(onClick = {
-                    val intent = Intent(context, AccountActivity::class.java)
-                    //intent.putExtra("firstName", email.subject)
-                    //intent.putExtra("lastName", email.from)
-                    //intent.putExtra("email", email.receivedDate)
-                    //intent.putExtra("smtp", email.body)
-                    ContextCompat.startActivity(context, intent, null)
-                },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .align(CenterHorizontally)
-                ) {
-                    Icon(Icons.Default.ManageAccounts,
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+                Icon(Icons.Default.ManageAccounts,
                         contentDescription = "Account",
-                        modifier = Modifier.size(64.dp),
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(16.dp)),
                         tint = Color.Gray)
-                }
 
-                Text(text = "John Test Person",
+
+                Text(text = "${activeUser.firstName} ${activeUser.lastName}",
                     fontSize = 20.sp,
                     modifier = Modifier
                         .fillMaxWidth(),
                     color = Color.Black,
+                    textAlign = TextAlign.Center
+                )
+                Text(text = "${activeUser.emailAddress}",
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    color = Color.Gray,
                     textAlign = TextAlign.Center
                 )
             }

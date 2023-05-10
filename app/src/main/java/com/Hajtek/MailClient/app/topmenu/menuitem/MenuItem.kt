@@ -25,7 +25,7 @@ fun MenuItem(menuItem: MenuItemModel) {
         modifier = Modifier
             .padding(8.dp)
             .height(70.dp),
-        shape = RoundedCornerShape(30),
+        shape = RoundedCornerShape(16.dp),
         backgroundColor = Color.White,
         elevation = 6.dp
     ) {

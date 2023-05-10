@@ -166,7 +166,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
@@ -184,7 +184,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             label = { Text("Password") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
@@ -208,7 +208,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Sign Up",
@@ -216,7 +216,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
         }
         TextButton(
             onClick = { onNavigateToLogin() },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier
                 .padding(top = 0.dp)
         ) {
@@ -254,7 +254,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
@@ -273,7 +273,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -294,7 +294,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
         ) {
             Text(text = "Login",
@@ -302,7 +302,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
         }
         TextButton(
             onClick = { onNavigateToSignUp() },
-            shape = RoundedCornerShape(30),
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier
                 .padding(top = 0.dp)
         ) {

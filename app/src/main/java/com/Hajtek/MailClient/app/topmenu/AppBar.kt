@@ -45,7 +45,7 @@ fun AppBar(title: String, onWriteMail: () -> Unit, onMenu: () -> Unit) {
                 },
                 Modifier
                     .padding(end = 8.dp),
-                shape = RoundedCornerShape(30),
+                shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE)))
             {
                 Text(text = "Write mail ", color = Color.White)
@@ -62,7 +62,7 @@ fun AppBar(title: String, onWriteMail: () -> Unit, onMenu: () -> Unit) {
 @Composable
 fun WriteMailPreview() {
     Button(onClick = {/* OPEN WRITE MAIL VIEW */ },
-        shape = RoundedCornerShape(30),
+        shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE)))
     {
         Text(text = "Write mail ", color = Color.White)
