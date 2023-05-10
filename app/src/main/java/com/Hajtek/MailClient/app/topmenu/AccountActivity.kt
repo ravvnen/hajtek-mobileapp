@@ -39,22 +39,28 @@ class AccountActivity : ComponentActivity() {
                             .size(192.dp),
                         tint = Color.Black)
                     Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = "Email:",
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 0.dp, end = 0.dp, top = 20.dp, bottom = 5.dp),
-                        color = Color.Black, textAlign = TextAlign.Center
-                    )
-                    Text(
-                        text = "Password:",
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        color = Color.Black, textAlign = TextAlign.Center
-                    )
+                    Card() {
+                        Text(
+                            text = "Email:",
+                            fontSize = 20.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 0.dp, end = 0.dp, top = 20.dp, bottom = 5.dp),
+                            color = Color.Black, textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "Password:",
+                            fontSize = 20.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(5.dp),
+                            color = Color.Black, textAlign = TextAlign.Center
+                        )
+                    }
+
+
+
+
                     /*
                     Text(
                         text = "",
@@ -65,7 +71,7 @@ class AccountActivity : ComponentActivity() {
                         color = Color.Black, textAlign = TextAlign.Center
                     )
                      */
-                    Spacer(modifier = Modifier.size(200.dp))
+                    Spacer(modifier = Modifier.size(20.dp))
                     Button(
                         onClick = { finish() },
                         modifier = Modifier.width(180.dp),

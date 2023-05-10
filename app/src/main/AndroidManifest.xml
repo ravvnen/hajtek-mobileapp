@@ -76,6 +76,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".app.ViewMail"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".app.SentActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">

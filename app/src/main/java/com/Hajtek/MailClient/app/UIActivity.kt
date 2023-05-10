@@ -45,7 +45,7 @@ class UIActivity : ComponentActivity() {
 
                 val menuItems = listOf(
                     MenuItemModel(Icons.Filled.Email,"1", "Inbox", "Inbox", onClick = {
-                        val intent = Intent(context, com.Hajtek.MailClient.app.InboxActivity::class.java)
+                        val intent = Intent(context, InboxActivity::class.java)
                         ContextCompat.startActivity(context, intent, null)
                     }),
                     MenuItemModel(Icons.Filled.Send,"2", "Sent",  "Sent", onClick = {

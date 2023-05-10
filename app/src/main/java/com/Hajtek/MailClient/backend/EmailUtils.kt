@@ -36,14 +36,14 @@ import org.apache.commons.codec.binary.Base64
 
 
 data class Email(
-    val id : String,
-    val from: String,
-    val to: List<String>,
-    val subject: String,
-    val body: String,
-    val sentDate: String,
-    val receivedDate: String,
-    val isRead : Boolean
+    val id : String = "",
+    val from: String = "",
+    val to: List<String> = emptyList(),
+    val subject: String = "",
+    val body: String = "",
+    val sentDate: String = "",
+    val receivedDate: String = "",
+    val isRead : Boolean = false
 )
 
 object EmailUtil {

@@ -1,5 +1,8 @@
 package com.Hajtek.MailClient.app
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -13,9 +16,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -30,6 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import com.Hajtek.MailClient.app.topmenu.WriteMail
 import com.Hajtek.MailClient.backend.Email
 import com.Hajtek.MailClient.backend.EmailUtil
 import kotlinx.coroutines.*
@@ -61,10 +70,18 @@ object MailUtilComposables{
             }
         }
 
+
+
         LazyColumn {
             items(emails) { email ->
                 Button(
-                    onClick = { /* Navigate to full email */ },
+                    onClick = {
+                        val intent = Intent(context, ViewMail::class.java)
+                        intent.putExtra("mailSubject", email.subject)
+                        intent.putExtra("mailFrom", email.from)
+                        intent.putExtra("mailDate", email.receivedDate)
+                        intent.putExtra("mailBody", email.body)
+                        startActivity(context, intent, null) },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.White,
                         contentColor = Color.Black
@@ -80,28 +97,106 @@ object MailUtilComposables{
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "From: ${email.from}",
+                            text = email.subject,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
 
                         )
                         Text(
-                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            text = email.from,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Subject: ${email.subject}",
+                            text = email.receivedDate.slice(0..15),
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
-
+                        Text(
+                            text = email.body.trim(),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Gray,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }
+        }
+    }
+
+
+    @Composable
+    fun ViewMail(mailSubject: String, mailFrom: String, mailDate: String, mailBody: String) {
+
+                    Column(horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(16.dp)) {
+                        Card() {
+                            Column(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = mailSubject,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Left,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = Color.Black
+                                )
+                                Text(
+                                    text = mailFrom,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Left,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = Color.Black
+
+                                )
+                                Text(
+                                    text = mailDate.slice(0..15),
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Left,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = Color.Gray
+                                )
+                            }
+
+                        }
+                        Spacer(modifier = Modifier.size(8.dp))
+
+                        Card() {
+                            Column(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = mailBody,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Left,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .verticalScroll(rememberScrollState(0)),
+                                    color = Color.Black,
+
+                                    )
+
+                            }
+
+                        }
         }
     }
 
@@ -126,7 +221,12 @@ object MailUtilComposables{
         LazyColumn {
             items(emails) { email ->
                 Button(
-                    onClick = { /* Navigate to full email */ },
+                    onClick = { val intent = Intent(context, ViewMail::class.java)
+                        intent.putExtra("mailSubject", email.subject)
+                        intent.putExtra("mailFrom", email.from)
+                        intent.putExtra("mailDate", email.receivedDate)
+                        intent.putExtra("mailBody", email.body)
+                        startActivity(context, intent, null) },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.White,
                         contentColor = Color.Black
@@ -142,25 +242,42 @@ object MailUtilComposables{
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "From: ${email.from}",
+                            text = email.subject,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
 
                         )
                         Text(
-                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            text = email.from,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Subject: ${email.subject}",
+                            text = email.receivedDate.slice(0..15),
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
-
+                        Text(
+                            text = email.body.trim(),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Gray,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }
@@ -188,7 +305,12 @@ object MailUtilComposables{
         LazyColumn {
             items(emails) { email ->
                 Button(
-                    onClick = { /* Navigate to full email */ },
+                    onClick = { val intent = Intent(context, ViewMail::class.java)
+                        intent.putExtra("mailSubject", email.subject)
+                        intent.putExtra("mailFrom", email.from)
+                        intent.putExtra("mailDate", email.receivedDate)
+                        intent.putExtra("mailBody", email.body)
+                        startActivity(context, intent, null) },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.White,
                         contentColor = Color.Black
@@ -204,25 +326,42 @@ object MailUtilComposables{
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "From: ${email.from}",
+                            text = email.subject,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
 
                         )
                         Text(
-                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            text = email.from,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Subject: ${email.subject}",
+                            text = email.receivedDate.slice(0..15),
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
-
+                        Text(
+                            text = email.body.trim(),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Gray,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }
@@ -250,7 +389,12 @@ object MailUtilComposables{
         LazyColumn {
             items(emails) { email ->
                 Button(
-                    onClick = { /* Navigate to full email */ },
+                    onClick = { val intent = Intent(context, ViewMail::class.java)
+                        intent.putExtra("mailSubject", email.subject)
+                        intent.putExtra("mailFrom", email.from)
+                        intent.putExtra("mailDate", email.receivedDate)
+                        intent.putExtra("mailBody", email.body)
+                        startActivity(context, intent, null) },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.White,
                         contentColor = Color.Black
@@ -266,135 +410,47 @@ object MailUtilComposables{
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "From: ${email.from}",
+                            text = email.subject,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
-
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Received: ${email.receivedDate.slice(0..15)}",
+                            text = email.from,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Subject: ${email.subject}",
+                            text = email.receivedDate.slice(0..15),
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Left,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
-
+                        Text(
+                            text = email.body.trim(),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Gray,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }
         }
     }
 
-    @Composable
-    fun SentEmailsScreen(onEmailDeleted: (Email) -> Unit, onEmailMovedToInbox: (Email) -> Unit) {
-        val context = LocalContext.current
-
-        var sentMails by remember { mutableStateOf(listOf<Email>()) }
-
-        LaunchedEffect(Unit){
-            try {
-                val mails = EmailUtil.fetchSent("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
-                sentMails = mails
-            }catch (ex : Exception){
-                Toast.makeText(context, "Sent mail folder is empty", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        val expandedMenuItemId = remember { mutableStateOf(-1) }
-        Column {
-            LazyColumn {
-                items(sentMails) { email ->
-                    val menuExpanded = expandedMenuItemId.value == email.hashCode()
-                    val options = listOf(
-                        com.Hajtek.MailClient.app.EmailOption("Delete", Icons.Default.Delete) {
-                            onEmailDeleted(email)
-                        },
-                        com.Hajtek.MailClient.app.EmailOption(
-                            "Move to Inbox",
-                            Icons.Default.MoveToInbox
-                        ) {
-                            onEmailMovedToInbox(email)
-                        }
-                    )
-                    com.Hajtek.MailClient.app.MailUtilComposables.EmailItem(
-                        email = email,
-                        onItemHold = {
-                            if (menuExpanded) {
-                                expandedMenuItemId.value = -1
-                            } else {
-                                expandedMenuItemId.value = email.hashCode()
-                            }
-                        },
-                        showOptionsMenu = menuExpanded,
-                        options = options
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun TrashView1() {
-
-        var emails by remember { mutableStateOf(listOf<Email>()) }
-
-        var context = LocalContext.current
-
-        LaunchedEffect(Unit){
-            try {
-                val mails = EmailUtil.fetchTrashEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
-                emails = mails
-            }catch (e : Throwable){
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        LazyColumn {
-            items(emails) { email ->
-                Button(
-                    onClick = { /* Navigate to full email */ },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color.White,
-                        contentColor = Color.Black
-                    ),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 8.dp
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Column {
-                        Text(
-                            text = "From: ${email.from}",
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                        Text(
-                            text = "Subject: ${email.subject}",
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Black
-                        )
-                        Text(
-                            text = "Received: ${email.receivedDate}",
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Black
-                        )
-                    }
-                }
-            }
-        }
-    }
 
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
@@ -525,48 +581,6 @@ object MailUtilComposables{
 
     }
 
-    @Composable
-    fun SpamEmailsScreen(onEmailDeleted: (Email) -> Unit, onEmailMovedToInbox: (Email) -> Unit) {
-
-        var spamMails by remember { mutableStateOf(listOf<Email>()) }
-
-        LaunchedEffect(Unit){
-            val mails = EmailUtil.fetchSpamEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
-            spamMails = mails
-        }
-
-        val expandedMenuItemId = remember { mutableStateOf(-1) }
-        Column {
-            LazyColumn {
-                items(spamMails) { email ->
-                    val menuExpanded = expandedMenuItemId.value == email.hashCode()
-                    val options = listOf(
-                        com.Hajtek.MailClient.app.EmailOption("Delete", Icons.Default.Delete) {
-                            onEmailDeleted(email)
-                        },
-                        com.Hajtek.MailClient.app.EmailOption(
-                            "Move to Inbox",
-                            Icons.Default.MoveToInbox
-                        ) {
-                            onEmailMovedToInbox(email)
-                        }
-                    )
-                    com.Hajtek.MailClient.app.MailUtilComposables.EmailItem(
-                        email = email,
-                        onItemHold = {
-                            if (menuExpanded) {
-                                expandedMenuItemId.value = -1
-                            } else {
-                                expandedMenuItemId.value = email.hashCode()
-                            }
-                        },
-                        showOptionsMenu = menuExpanded,
-                        options = options
-                    )
-                }
-            }
-        }
-    }
 
     @Composable
     fun EmailItem(email: Email, onItemHold: () -> Unit, showOptionsMenu: Boolean = false, options: List<com.Hajtek.MailClient.app.EmailOption> = emptyList()) {

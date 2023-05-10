@@ -288,30 +288,3 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
         }
     }
 }
-
-
-
-
-
-@Composable
-fun TextFieldWithIcons(placeholder_text: String, icon: ImageVector, keyboardtype: KeyboardType) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
-    Text(text = text.text)
-    return OutlinedTextField(
-        value = text,
-        leadingIcon = { Icon(imageVector = icon,
-            contentDescription = "Icon",
-            tint = Black
-        ) },
-        onValueChange = {
-            text = it
-        },
-        label = { Text(text = placeholder_text) },
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardtype),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedLabelColor = Black,
-            focusedBorderColor = Black,
-            unfocusedLabelColor = Black,
-            unfocusedBorderColor = Black)
-    )
-}
