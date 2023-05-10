@@ -100,22 +100,19 @@ class MainActivity : ComponentActivity() {
                     // Login success
                     Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
-                    val intent = Intent(this@MainActivity, UIActivity::class.java)
-
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
                             if(user != null){
                                 val tmpuser = FirestoreUtils.fetchUserData(user)
                                 activeUser = tmpuser
+                                val intent = Intent(this@MainActivity, UIActivity::class.java)
+                                startActivity(intent)
                             }
                         }catch (ex : Exception){
-                            Toast.makeText(this@MainActivity, "Account doesn't exist in database", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@MainActivity, NoMailAccount::class.java)
+                            startActivity(intent)
                         }
                     }
-
-
-                    startActivity(intent)
-                    // Do something with the logged-in user
                 } else {
                     // Login failed
                     Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
