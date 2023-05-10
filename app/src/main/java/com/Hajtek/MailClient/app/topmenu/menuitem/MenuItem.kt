@@ -42,7 +42,7 @@ fun MenuItem(menuItem: MenuItemModel) {
                     .size(50.dp),
                 tint = Color(0xFF0078CE)
             )
-            Spacer(modifier = Modifier.width(width = 8.dp))
+            Spacer(modifier = Modifier.width(width = 0.dp))
             /*
             Af en eller anden grund vises følgende tekst ikke
              */

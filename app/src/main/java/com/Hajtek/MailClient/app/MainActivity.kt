@@ -149,6 +149,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
+            shape = RoundedCornerShape(30),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
@@ -166,6 +167,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
+            shape = RoundedCornerShape(30),
             label = { Text("Password") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
@@ -197,6 +199,7 @@ fun SignUpPage(onSignUp: (email: String, password: String) -> Unit, onNavigateTo
         }
         TextButton(
             onClick = { onNavigateToLogin() },
+            shape = RoundedCornerShape(30),
             modifier = Modifier
                 .padding(top = 0.dp)
         ) {
@@ -234,6 +237,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
+            shape = RoundedCornerShape(30),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
@@ -252,6 +256,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
+            shape = RoundedCornerShape(30),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -280,6 +285,7 @@ fun LoginPage(onLogin: (email: String, password: String) -> Unit, onNavigateToSi
         }
         TextButton(
             onClick = { onNavigateToSignUp() },
+            shape = RoundedCornerShape(30),
             modifier = Modifier
                 .padding(top = 0.dp)
         ) {
