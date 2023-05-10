@@ -80,7 +80,7 @@ object EmailUtil {
                     addRecipient(Message.RecipientType.TO, InternetAddress(recipient))
                 }
 
-                this.subject = subject
+                subject = mail.subject
                 setText(mail.body)
             }
 
@@ -131,11 +131,19 @@ object EmailUtil {
                 }
             }
 
+            var tmpSubject : String = ""
+
+            if(message.subject != null){
+                tmpSubject = message.subject
+            }else{
+                tmpSubject = "Empty Subject"
+            }
+
             var tmpEmail = Email(
                 message.messageNumber.toString(),
                 message.from[0].toString(),
                 toList,
-                message.subject ?: "empty",
+                tmpSubject,
                 message.content.toString(),
                 "",
                 message.receivedDate.toString(),

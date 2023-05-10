@@ -53,6 +53,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import com.Hajtek.MailClient.app.UIActivity
+import com.example.myapplication.backend.FirestoreUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+
+var activeUser = FirestoreUtils.FireStoreUser()
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -96,7 +101,19 @@ class MainActivity : ComponentActivity() {
                     Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
                     val intent = Intent(this@MainActivity, UIActivity::class.java)
-                    //intent.putExtra("kode", user?.email)
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            if(user != null){
+                                val tmpuser = FirestoreUtils.fetchUserData(user)
+                                activeUser = tmpuser
+                            }
+                        }catch (ex : Exception){
+                            Toast.makeText(this@MainActivity, "Account doesn't exist in database", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
                     startActivity(intent)
                     // Do something with the logged-in user
                 } else {

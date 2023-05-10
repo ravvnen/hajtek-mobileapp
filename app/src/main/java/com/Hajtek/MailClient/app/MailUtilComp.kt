@@ -61,8 +61,8 @@ object MailUtilComposables{
 
         LaunchedEffect(Unit){
             try {
-                val mails = EmailUtil.fetchInbox("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
-                emails = mails
+                val mails = EmailUtil.fetchInbox(activeUser.imapHost, activeUser.emailAddress, activeUser.password)
+                emails = mails.reversed()
             }catch(e : Throwable){
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -209,8 +209,8 @@ object MailUtilComposables{
 
         LaunchedEffect(Unit){
             try {
-                val mails = EmailUtil.fetchSpamEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
-                emails = mails
+                val mails = EmailUtil.fetchSpamEmails(activeUser.imapHost, "587", activeUser.emailAddress, activeUser.password)
+                emails = mails.reversed()
             }catch(e : Throwable){
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -293,8 +293,8 @@ object MailUtilComposables{
 
         LaunchedEffect(Unit){
             try {
-                val mails = EmailUtil.fetchSent("smtp.gmail.com", EmailUtil.mailFrom, EmailUtil.password)
-                emails = mails
+                val mails = EmailUtil.fetchSent(activeUser.imapHost, activeUser.emailAddress, activeUser.password)
+                emails = mails.reversed()
             }catch(e : Throwable){
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -377,8 +377,8 @@ object MailUtilComposables{
 
         LaunchedEffect(Unit){
             try {
-                val mails = EmailUtil.fetchTrashEmails("smtp.gmail.com", "587", EmailUtil.mailFrom, EmailUtil.password)
-                emails = mails
+                val mails = EmailUtil.fetchTrashEmails(activeUser.imapHost, "587", activeUser.emailAddress, activeUser.password)
+                emails = mails.reversed()
             }catch(e : Throwable){
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -489,10 +489,10 @@ object MailUtilComposables{
                         CoroutineScope(Dispatchers.IO).launch {
                             try {
                                 EmailUtil.sendEmail(
-                                    host = "smtp.gmail.com",
-                                    port = "587",
-                                    username = EmailUtil.mailFrom,
-                                    password = EmailUtil.password,
+                                    host = activeUser.smtpHost,
+                                    port = activeUser.smtpPort,
+                                    username = activeUser.emailAddress,
+                                    password = activeUser.password,
                                     mail = email
                                 )
 
