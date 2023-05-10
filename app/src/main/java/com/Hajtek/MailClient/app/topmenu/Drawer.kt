@@ -1,28 +1,22 @@
 package com.Hajtek.MailClient.app.topmenu
 
 import android.content.Intent
-import android.media.Image
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -43,9 +37,14 @@ ASBJØRN^2s UI MAIN
 
 @Composable
 fun Drawer(menuItems: List<MenuItemModel>) {
-    Column {
-        DrawerHeader()
-        DrawerBody(menuItems)
+    Column(modifier = Modifier
+        .background(MaterialTheme.colors.background)
+        .fillMaxHeight(),
+        verticalArrangement = Arrangement.SpaceBetween) {
+        Column() {
+            DrawerHeader()
+            DrawerBody(menuItems)
+        }
         DrawerUser()
     }
 }
@@ -60,7 +59,8 @@ fun DrawerHeader() {
     ){
         Image(
             modifier = Modifier
-                .size(width = 400.dp, height = 70.dp),
+                .fillMaxWidth()
+                .padding(10.dp),
             painter = image,
             contentDescription = null
         )
@@ -72,7 +72,8 @@ fun DrawerBody(menuItems: List<MenuItemModel>) {
     LazyColumn(
         Modifier
             .background(MaterialTheme.colors.background)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)){
         items(menuItems) { item ->
             MenuItem(menuItem = item) //tager her et icon? skal den det
         }
@@ -82,17 +83,24 @@ fun DrawerBody(menuItems: List<MenuItemModel>) {
 @Composable
 fun DrawerUser() {
     val context = LocalContext.current
-    Box(modifier = Modifier
-        .background(MaterialTheme.colors.background)
-        .fillMaxSize()
+    Column(verticalArrangement = Arrangement.Bottom) {
 
-    )
-    {
-        Box(modifier = Modifier.align(Alignment.BottomCenter))
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 18.dp, vertical = 18.dp),
+        shape = RoundedCornerShape(15),
+        backgroundColor = Color.White,
+        elevation = 6.dp)
+
         {
-            Column() {
+            Column(modifier = Modifier
+                .padding(16.dp)) {
                 IconButton(onClick = {
                     val intent = Intent(context, AccountActivity::class.java)
+                    //intent.putExtra("firstName", email.subject)
+                    //intent.putExtra("lastName", email.from)
+                    //intent.putExtra("email", email.receivedDate)
+                    //intent.putExtra("smtp", email.body)
                     ContextCompat.startActivity(context, intent, null)
                 },
                     modifier = Modifier
@@ -106,7 +114,7 @@ fun DrawerUser() {
                 }
 
                 Text(text = "John Test Person",
-                    fontSize = 30.sp,
+                    fontSize = 20.sp,
                     modifier = Modifier
                         .fillMaxWidth(),
                     color = Color.Black,
@@ -117,26 +125,7 @@ fun DrawerUser() {
     }
 }
 
-/*
-Icon(
-                imageVector = image,
-                contentDescription = "Account",
-                modifier = Modifier
-                    //.fillMaxWidth()
-                    .padding(5.dp)
-                    .size(width = 60.dp, height = 90.dp)
-                    //.align(Alignment.TopCenter)
-            )
-                Text(text = "John Test Person",
-                    fontSize = 16.sp,
-                    modifier = Modifier
-                        .padding(40.dp)
-                        .fillMaxWidth(),
-                    color = Color.Black,
-                    textAlign = TextAlign.Center
-                )
 
- */
 
 
 

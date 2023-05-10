@@ -15,6 +15,10 @@ import com.Hajtek.MailClient.app.theme.AppTheme
 class ViewMail : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val mailSubject = intent.getStringExtra("mailSubject")
+        val mailFrom = intent.getStringExtra("mailFrom")
+        val mailDate = intent.getStringExtra("mailDate")
+        val mailBody = intent.getStringExtra("mailBody")
         setContent() {
             AppTheme(darkTheme = false) {
                 Column() {
@@ -29,16 +33,18 @@ class ViewMail : ComponentActivity() {
                         }
                          */
 
-                        Text(
-                            text = "Inbox",
-                            fontSize = 36.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 30.dp, vertical = 8.dp),
-                            color = Color.Black
-                        )
+
                     }
 
-                    com.Hajtek.MailClient.app.MailUtilComposables.InboxView()
+                    if (mailSubject != null) {
+                        if (mailFrom != null) {
+                            if (mailDate != null) {
+                                if (mailBody != null) {
+                                    MailUtilComposables.ViewMail(mailSubject, mailFrom, mailDate, mailBody)
+                                }
+                            }
+                        }
+                    }
                 }
 
 
