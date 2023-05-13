@@ -66,16 +66,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme(darkTheme = true) {
-                //LoginPage(onLogin = { email, password -> handleLogin(email, password) })
-                //Login_page()
-
                 setContent {
-                    //var showLoginPage by remember { mutableStateOf(true) }
-                    //SignUpPage(
-                    //    onSignUp = { email, password -> handleSignUp(email, password) },
-                    //    onNavigateToLogin = { showLoginPage = true }
-                    //)
-
                     var showLoginPage by remember { mutableStateOf(true) }
                     if (showLoginPage) {
                         LoginPage(
