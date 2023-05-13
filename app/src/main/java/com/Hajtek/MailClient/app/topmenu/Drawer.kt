@@ -8,14 +8,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -27,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.Hajtek.MailClient.R
+import com.Hajtek.MailClient.app.MainActivity
 import com.Hajtek.MailClient.app.activeUser
 import com.Hajtek.MailClient.app.theme.AppTheme
 import com.Hajtek.MailClient.app.topmenu.menuitem.MenuItem
@@ -91,8 +90,10 @@ fun DrawerUser() {
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 18.dp, vertical = 18.dp)
-        .clickable{ val intent = Intent(context, AccountActivity::class.java)
-            ContextCompat.startActivity(context, intent, null) },
+        .clickable {
+            val intent = Intent(context, AccountActivity::class.java)
+            ContextCompat.startActivity(context, intent, null)
+        },
         shape = RoundedCornerShape(16.dp),
         backgroundColor = Color.White,
         elevation = 4.dp)
@@ -126,6 +127,26 @@ fun DrawerUser() {
                 )
             }
         }
+        Spacer(modifier = Modifier.size(0.dp))
+        Row(horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .offset(y = (-10).dp)) {
+            Button(
+                onClick = { val intent = Intent(context, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    ContextCompat.startActivity(context, intent, null) },
+                modifier = Modifier.width(180.dp),
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 4.dp
+                ),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0078CE))
+            ) {
+                Text("Logout", color = Color.White)
+            }
+        }
+
     }
 }
 
